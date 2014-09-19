@@ -14,6 +14,7 @@ namespace Moxalytics
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
+            // If angular code doesn't work due to minification/bundling, apply the steps here: http://stackoverflow.com/a/14909598
             bundles.Add(new Bundle("~/bundles/angularjs").Include(
                 "~/Scripts/angular.js",
                 "~/Scripts/angular-animate.js",
