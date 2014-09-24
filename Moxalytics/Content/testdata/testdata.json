@@ -1,0 +1,18 @@
+﻿{
+    "databases": [
+        {
+            "name": "Database1",
+            "tables": [
+                "db1-table1",
+                "db1-table2"
+            ]
+        },
+        {
+            "name": "Database2",
+            "tables": [
+                "db2-table1",
+                "db2-table2"
+            ]
+        }
+    ]
+}

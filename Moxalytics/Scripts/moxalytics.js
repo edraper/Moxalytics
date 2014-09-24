@@ -11,19 +11,35 @@
         // 3rd Party Modules
         
     ])
-    .controller('DatabaseController', ['$scope', function($scope) {
-        // Get list of databases here
+    .controller('DatabaseController', ['$scope', '$http', function($scope, $http) {
+        /* Possible databases object layout. Can and should change:
+            See /Content/testdata/testdata.json
+        */
         $scope.databases = {};
 
-        $scope.getDatabases = function () {
-            // A json file containing  the names of all of the databases would be pulled in here and 
-            // displayed on the page. Switch to $.getJSON or $http.
-            $.get("/Content/bootstrap.css", function (data) {
-                // Testing getting data in angular controllers. Might want to switch to $http instead of $.get.
-                alert(data);
+        // Load json data using $http. This is automatically called when the page is loaded.
+        // The url below needs to change when it goes and gets the actual data from the databases.
+        $http.get('/Content/testdata/testdata.json').success(function (data) {
+            $scope.databases = data.databases;
+        }).
+        error(function (data) {
+            console.log("Unable to load databases.");
+        });
 
-                // Set $scope.databases = data;.
+        // Loads the list of databases and tables. Call if the database views need to be loaded manually.
+        $scope.getDatabases = function () {
+            $http.get('/Content/testdata/testdata.json').success(function (data) {
+                $scope.databases = data.databases;
+                $scope.$apply(); // Updates the data on the first click. Otherwise, the view on the page is not updated until clicked again.
+            }).
+            error(function (data) {
+                console.log("Unable to load databases.");
             });
         };
+
+        $scope.expandDatabase = function () {
+            // Expands the database to show the tables.
+            // Might not need this...
+        }
     }]);
 })();

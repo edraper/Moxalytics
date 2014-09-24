@@ -22,3 +22,15 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.database-list {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.table-list {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 10px;
+}

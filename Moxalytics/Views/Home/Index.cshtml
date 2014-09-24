@@ -3,33 +3,33 @@
 }
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <img src="~/Content/dbicon.png" />Database 1<br />
-      <div ng-controller="DatabaseController">
-        <a href="" ng-click="getDatabases()">Get databases</a>
-        <!-- Testing ng-click and retrieving data. Right now, bootstrap.css is shown in an alert. -->
-      </div>
-        @*<p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>*@
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br/>
-        <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />
-        <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />
-        <img src="~/Content/collapseicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />Field<br />Field<br />Field<br />
-        <p>Click a field to add to report.</p>
+  <div ng-controller="DatabaseController">
+    <a href="" ng-click="getDatabases()">Get databases (if database views don't load automatically).</a><br />
+    <div class="col-md-4" ng-repeat="database in databases">
+      <img src="~/Content/dbicon.png" /><span>{{database.name}}</span>
+      <ul class="table-list">
+        <li ng-repeat="table in database.tables">
+          <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" /><span>{{table}}</span>
+        </li>
+        <li>Click a field to add to report.</li>
+      </ul>
     </div>
-    <div class="col-md-4">
+  </div>
+
+    @*<p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+      <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br/>
+      <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />
+      <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />
+      <img src="~/Content/collapseicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />Field<br />Field<br />Field<br />
+      <p>Click a field to add to report.</p>*@
+    @*<div class="col-md-4">
         <img src="~/Content/dbicon.png" />Database 2<br />
         <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />
         <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />
         <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />
         <img src="~/Content/collapseicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />Field<br />Field<br />Field<br />
         <p>Click a field to add to report.</p>
-    </div>
+    </div>*@
     <div class="col-md-4">
         <h3>Match fields between tables</h3>
         DB1-Table1-Field<br />DB1-Table1-Field<br />DB1-Table1-Field<br />DB1-Table1-Field<br />
