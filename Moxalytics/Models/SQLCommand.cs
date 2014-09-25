@@ -91,6 +91,18 @@ namespace Moxalytics.Models
 
         }
 
+        public void Distinct()
+        {
+            this.distinct = "DISTINCT";
+        }
+
+        
+
+        public void Select(object select)
+        {
+
+        }
+
        /// <summary>
        /// getDBsOnServer, retruns a list of Databases on the parameter pass in
        /// </summary>
