@@ -19,8 +19,9 @@
 
         // Load json data using $http. This is automatically called when the page is loaded.
         // The url below needs to change when it goes and gets the actual data from the databases.
-        $http.get('/Content/testdata/testdata.json').success(function (data) {
-            $scope.databases = data.databases;
+        $http.get('/Home/Contact').success(function (data) {
+            alert(data);
+            //$scope.databases = data.databases;
         }).
         error(function (data) {
             console.log("Unable to load databases.");
@@ -38,8 +39,12 @@
         };
 
         $scope.expandDatabase = function () {
-            // Expands the database to show the tables.
-            // Might not need this...
+            // Expands the database to show the tables. Might not need this...
+            
+            // esp\xray - pass into function as a string
+            // execute() executes the query
+            // http://www.aspsnippets.com/Articles/Call-ASPNet-Page-Method-using-jQuery-AJAX-Example.aspx
+            // https://stackoverflow.com/questions/17129132/ng-repeat-dosnt-update-itself-after-inserting-new-item-using-dialog
         }
     }]);
 })();
