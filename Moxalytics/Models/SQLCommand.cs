@@ -78,7 +78,13 @@ namespace Moxalytics.Models
             }
             
         }
-
+        /// <summary>
+        /// GetColumnsInTable returns a list of columns for any given table.
+        /// </summary>
+        /// <param name="server"></param>
+        /// <param name="database"></param>
+        /// <param name="table"></param>
+        /// <returns></returns>
         public List<string> getColumnsInTable(string server, string database, string table)
         {
             SqlDataReader readerColumn = null;
@@ -117,7 +123,7 @@ namespace Moxalytics.Models
         }
 
         /// <summary>
-        /// GetTablesInDatabase: Returns a listof 
+        /// GetTablesInDatabase: Returns a list Table names
         /// </summary>
         /// <param name="server"></param>
         /// <param name="database"></param>
