@@ -10,7 +10,10 @@ namespace Moxalytics.Models
 {
     public class SQLCommand
     {
-        public List<List<string>> dbList;
+        public List<string> dbList = new List<string>();
+        public List<string> tableList = new List<string>();
+        public List<string> ColumnList = new List<string>();
+        
         public string[] dbArray;
         public object dbQueriedObject;
         public DataTable dbTable;
@@ -47,8 +50,8 @@ namespace Moxalytics.Models
         public void execute()
         {
             SqlDataReader reader = null;
-            
-            string sqlString = "SELECT " + distinct + " " + select + " " + round + " " + max + " " + min + " " + average + " " + top + " " + count + " " + last + " " + first + " " +
+
+            string sqlString = "SELECT " + distinct + " " + top + " " + select + " " + round + " " + max + " " + min + " " + average + " " + count + " " + last + " " + first + " " +
                                 from + " " + join + " " + where + " " + having + " " + like + " " + between + " " + groupBy + " " + orderBy + ";";
                                
             using (SqlConnection connection = new SqlConnection())
@@ -76,42 +79,91 @@ namespace Moxalytics.Models
             
         }
 
-        public void dbConnection(string ConnectionString)
+        public List<string> getColumnsInTable(string server, string database, string table)
         {
+            SqlDataReader readerColumn = null;
+            string queryString = string.Empty;
+            string connectionString = string.Empty;
 
+
+            //Query Setup
+            queryString = "Select * From INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" + table + "'";
+
+            connectionString = "Data Source= " + server + ";Initial Catalog=" + database + ";Integrated Security=True;";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                try
+                {
+                    connection.Open();
+                    readerColumn = command.ExecuteReader();
+                    while (readerColumn.Read())
+                    {
+                        ColumnList.Add(readerColumn[3].ToString());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //      System.Windows.Forms.MessageBox.Show("Unable to retrieve Database from Server \n" + queryString + "\n" + ex);
+                }
+                finally
+                {
+                    readerColumn.Close();
+                }
+
+                return ColumnList;
+            }
         }
 
-        public void dbConnection(string Server, string Database)
+        /// <summary>
+        /// GetTablesInDatabase: Returns a listof 
+        /// </summary>
+        /// <param name="server"></param>
+        /// <param name="database"></param>
+        public List<string> getTablesInDatabase(string server, string database)
         {
-            
+            SqlDataReader readerDB = null;
+            string queryString = string.Empty;
+            string connectionString = string.Empty;
+
+            //Query Setup
+            queryString = "Select * From sys.Tables";
+            connectionString = "Data Source= " + server + ";Initial Catalog=" + database + ";Integrated Security=True;";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                try
+                {
+                    connection.Open();
+                    readerDB = command.ExecuteReader();
+                    while (readerDB.Read())
+                    {
+                         tableList.Add(readerDB[0].ToString());
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    //     System.Windows.Forms.MessageBox.Show("Unable to retrieve Database from Server \n" + ex);
+                }
+                finally
+                {
+                    readerDB.Close();
+                }
+                return tableList;
+            }
         }
-
-        public void dbConnection(string Server, string Database, string username, string password)
-        {
-
-        }
-
-        public void Distinct()
-        {
-            this.distinct = "DISTINCT";
-        }
-
-        
-
-        public void Select(object select)
-        {
-
-        }
-
+   
        /// <summary>
        /// getDBsOnServer, retruns a list of Databases on the parameter pass in
        /// </summary>
-       /// <param name="Server"></param>
-        public static List<string> getDBsOnServer(string Server)
+       /// <param name="Server">Pass in the name of the server: for the one that works pass in "esp\xray"</param>
+        public List<string> getDBsOnServer(string Server)
         {
-            //Variables
-            List<string> databases = new List<string>();
-            SqlDataReader reader = null;
+            //Variables           
+            SqlDataReader reader = null; ;
             string queryString = string.Empty;
             string connectionString = string.Empty;
 
@@ -129,7 +181,7 @@ namespace Moxalytics.Models
                     
                     while (reader.Read())
                     {
-                        string a = reader[0].ToString();
+                        dbList.Add(reader[0].ToString());
                     }
                 }
                 catch(Exception ex)
@@ -141,7 +193,7 @@ namespace Moxalytics.Models
                     reader.Close();                    
                 }                  
             }
-            return databases;
+            return dbList;
         }
 
 
