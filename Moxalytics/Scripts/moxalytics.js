@@ -16,7 +16,7 @@
         // {
         //  "name": "db1",
         //  "table": "table1",
-        //  "column": "col1"
+        //  "column": "col1" // Need to determine this.
         // }
         var service = {};
         var joins = [];
@@ -87,7 +87,15 @@
 
         service.submitReportParameters = function() {
             // Generate the js object to send from the stored data.
+            var params = {};
+            params.JOINS = joins;
+            params.SELECT = select;
+            params.WHERE = where;
+            params.FROM = from;
+            params.ORDERBY = orderby;
+
             // Insert code from other project (branch) Todd.
+            // Set the code to the server
         }
 
         return service;
