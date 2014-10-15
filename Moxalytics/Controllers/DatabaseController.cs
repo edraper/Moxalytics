@@ -18,7 +18,7 @@ namespace Moxalytics.Controllers
         [Route("")]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "Please select a", "server" };
         }
 
         // GET: api/Database/server
@@ -30,8 +30,10 @@ namespace Moxalytics.Controllers
         }
 
         // POST: api/Database
+        // POSTs the SQL operations to the server. Data will need to be sanitized.
         public void Post([FromBody]string value)
         {
+
         }
 
         // PUT: api/Database/5

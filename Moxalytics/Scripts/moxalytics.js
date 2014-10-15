@@ -97,6 +97,7 @@
 
             // Insert code from other project (branch) (Todd).
             // Send the code to the server
+            // Data needs to be POSTed to api/Database
         }
 
         return service;
@@ -126,7 +127,7 @@
                 console.log(data);
                 console.log("testing server connection");
                 //$scope.$apply(); // Might need to remove. Needs testing.
-                //$scope.databases = data.databases;
+                //$scope.databases = data.databases;//
             }).
             error(function (data) {
                 console.log("Unable to load databases.");
