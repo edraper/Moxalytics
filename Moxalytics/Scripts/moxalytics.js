@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular.module('moxalytics', [
@@ -16,7 +16,7 @@
         // {
         //  "name": "db1",
         //  "table": "table1",
-        //  "column": "col1" // Need to determine this.
+        //  "column": "col1" // Need to determine this. This could potentially vary if columns were needed for example.
         // }
         var service = {};
         var joins = [];
@@ -35,6 +35,7 @@
 
         service.addSelect = function(database, asName, max, min, distinct, top, average, count, first, last, sum) {
             // Check for empty values
+            // For unused fields, an empty string, "", is passed.
             asName = typeof asName !== 'undefined' ? asName : "";
             max = typeof max !== 'undefined' ? max : "";
             min = typeof min !== 'undefined' ? min : "";
@@ -94,24 +95,26 @@
             params.FROM = from;
             params.ORDERBY = orderby;
 
-            // Insert code from other project (branch) Todd.
-            // Set the code to the server
+            // Insert code from other project (branch) (Todd).
+            // Send the code to the server
         }
 
         return service;
     })
 
     .controller('DatabaseController', ['$scope', '$http', function($scope, $http) {
-        /* Possible databases object layout. Can and should change:
-            See /Content/testdata/testdata.json
-        */
-        $scope.databases = {};
+        // Need layout for structure here.
+        $scope.databases = []; // Might need to move this to its own factory. Don't know whether to use [] or {}.
+        // Might want to include the tables in the databases object.
+        $scope.databases.tables = [];
+        $scope.server = "esp--xray"; // This will need to be changed based on the server the user selects. The -- is used in place of a \. Helps in api calls.
 
         // Load json data using $http. This is automatically called when the page is loaded.
-        // The url below needs to change when it goes and gets the actual data from the databases.
-        $http.get('/Home/Contact').success(function (data) {
-            alert(data);
+        $http.get('api/Database/'+$scope.server).success(function (data) {
+            console.log(data);
+            console.log("testing server connection");
             //$scope.databases = data.databases;
+            //$scope.$apply(); //Might need this here...
         }).
         error(function (data) {
             console.log("Unable to load databases.");
@@ -119,13 +122,30 @@
 
         // Loads the list of databases and tables. Call if the database views need to be loaded manually.
         $scope.getDatabases = function () {
-            $http.get('/Content/testdata/testdata.json').success(function (data) {
-                $scope.databases = data.databases;
-                $scope.$apply(); // Updates the data on the first click. Otherwise, the view on the page is not updated until clicked again.
+            $http.get('api/Database/' + $scope.server).success(function (data) {
+                console.log(data);
+                console.log("testing server connection");
+                //$scope.$apply(); // Might need to remove. Needs testing.
+                //$scope.databases = data.databases;
             }).
             error(function (data) {
                 console.log("Unable to load databases.");
             });
+        };
+        
+        // getTables may need to be removed. Depends on what calls are necessary. Might want to get everything in one call...
+        $scope.getTables = function (dbName) {
+            // dbName should be preformatted to the correct url. Example esp\xray
+            $http.get(dbName).success(function (data) {
+                $scope.tables = data.tables;
+            }).
+            error(function (data) {
+                console.log("Unable to load tables for " + dbName);
+            });
+        };
+
+        $scope.getColumns = function(dbName, table) {
+
         };
 
         $scope.expandDatabase = function() {

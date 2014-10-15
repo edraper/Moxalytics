@@ -196,7 +196,7 @@ namespace Moxalytics.Models
                 }
                 finally
                 {
-                    reader.Close();                    
+                    if (reader != null) reader.Close();
                 }                  
             }
             return dbList;
