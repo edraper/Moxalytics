@@ -10,13 +10,16 @@
 
         // 3rd Party Modules
 
-    ])
+  ])
+    // Might also want a report controller
     .factory('reportFactory', function($http) {
         // Holds the report data returned from the server
         // Needs implementation details
         var service = {};
 
-    })
+        return service;
+
+      })
     .factory('dataFactory', function ($http) {
       // Any database object should be of the form:
       // {
@@ -42,7 +45,7 @@
               "tableName": table,
               "columns": column,
               "AS": asValue
-          }
+          };
       };
 
       service.addJoin = function (type, leftDatabase, rightDatabase) {
