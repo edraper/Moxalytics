@@ -31,6 +31,8 @@ namespace Moxtest
             {
                 whereString = " " + columnDefault + " = " + value + " ";
             }
+
+            return string.Empty;
         }
     }
 }
