@@ -25,7 +25,7 @@ namespace Moxalytics.Controllers
         [Route("{server}")]
         public IEnumerable<string> Get(string server)
         {
-            server = server.Replace("--", "\\"); // The -- is used to represent a \
+            server = server.Replace("--", "\\"); // The -- is used to represent a \, for example esp\xray
             return sqlCommand.getDBsOnServer(server);
         }
 

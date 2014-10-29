@@ -3,14 +3,20 @@
 
   angular.module('moxalytics', [
         // Angular modules
-        'ngAnimate',
-        'ngRoute'
+        'ngAnimate', // Remove if unused
+        'ngRoute' // Remove if unused
 
         // Custom modules
 
         // 3rd Party Modules
 
     ])
+    .factory('reportFactory', function($http) {
+        // Holds the report data returned from the server
+        // Needs implementation details
+        var service = {};
+
+    })
     .factory('dataFactory', function ($http) {
       // Any database object should be of the form:
       // {
@@ -28,6 +34,17 @@
       var from = {};
       var orderby = [];
 
+      // All parameters should be strings
+      service.generateDatabaseObject = function (name, table, column, asValue) {
+          asValue = typeof asValue !== 'undefined' ? asValue: "";
+          return {
+              "databaseName": name,
+              "tableName": table,
+              "columns": column,
+              "AS": asValue
+          }
+      };
+
       service.addJoin = function (type, leftDatabase, rightDatabase) {
         if (type === "INNER")
           innerjoinTables.add({
@@ -40,7 +57,7 @@
             "rightTable": rightDatabase
           });
         else
-          alert("Invalid join type.");
+          alert("Invalid join type."); // Might want to change this to just show in a message box instead.
       };
 
       // Needs updating for new JSON format. Can you do "distinct" where it is both true and false?
@@ -74,13 +91,16 @@
         });
       };
 
-      service.addWhere = function (columnDefault, columnCompare, blogic, between, operand, like, val) {
-        // between should be an object { "start": "1", "end": "4"}
+      service.addWhere = function (columnDefault, columnCompare, blogic, betweenStart, betweenEnd, operand, like, val) {
+        // columnDefault and columnCompare should be database objects
         where.add({
           "columnDefault": columnDefault,
           "columnCompare": columnCompare,
           "blogic": blogic,
-          "between": between,
+          "between": {
+              "start": betweenStart.toString(),
+              "end": betweenEnd.toString()
+          },
           "operand": operand,
           "like": like,
           "value": val
@@ -92,38 +112,39 @@
         //from.isJoin = isJoin;
       };
 
-      service.addOrderBy = function (database) {
+      service.addOrderBy = function (column, orderType) {
+        // column is a database object
         orderby.add({
-          "name": database.name,
-          "table": database.table,
-          "column": database.column
+          "column": column,
+          "orderType": orderType
         });
       };
 
-      service.submitReportParameters = function () {
-        // Generate the js object to send from the stored data.
-        joins.add({
-          "type": "INNER",
-          "joinTables": innerjoinTables
-        }, {
-          "type": "OUTER",
-          "joinTables": outerjoinTables
-        });
+      service.submitReportParameters = function() {
+          // Generate the js object to send from the stored data.
+          joins.add({
+              "type": "INNER",
+              "joinTables": innerjoinTables
+            },
+            {
+              "type": "OUTER",
+              "joinTables": outerjoinTables
+          });
+      
+          var params = {};
+          params.JOINS = joins;
+          params.SELECT = select;
+          params.WHERE = where;
+          params.FROM = from;
+          params.ORDERBY = orderby;
+      
+          // Insert code from other project (branch) (Todd).
+          // Send the code to the server
+          // Data needs to be POSTed to api/Database
+      };
 
-        var params = {};
-        params.JOINS = joins;
-        params.SELECT = select;
-        params.WHERE = where;
-        params.FROM = from;
-        params.ORDERBY = orderby;
-
-        // Insert code from other project (branch) (Todd).
-        // Send the code to the server
-        // Data needs to be POSTed to api/Database
-      }
-
-      return service;
-    })
+    return service;
+  })
 
   .controller('DatabaseController', ['$scope', '$http',
     function ($scope, $http, dataFactory) {
@@ -141,7 +162,7 @@
         //$scope.$apply(); //Might need this here...
       }).
       error(function (data) {
-        console.log("Unable to load databases.");
+        console.log("Unable to load databases.\n" + data.toString());
       });
 
       // Loads the list of databases and tables. Call if the database views need to be loaded manually.
@@ -153,7 +174,7 @@
           //$scope.databases = data.databases;//
         }).
         error(function (data) {
-          console.log("Unable to load databases.");
+          console.log("Unable to load databases.\n" + data.toString());
         });
       };
 
@@ -164,7 +185,7 @@
           $scope.tables = data.tables;
         }).
         error(function (data) {
-          console.log("Unable to load tables for " + dbName);
+          console.log("Unable to load tables for " + dbName + "\n" + data.toString());
         });
       };
 
