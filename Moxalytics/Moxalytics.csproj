@@ -180,7 +180,13 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\SQLCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SQLObjects\Join.cs" />
+    <Compile Include="SQLObjects\Between.cs" />
+    <Compile Include="SQLObjects\Column.cs" />
+    <Compile Include="SQLObjects\Fields.cs" />
+    <Compile Include="SQLObjects\Joins.cs" />
+    <Compile Include="SQLObjects\JoinTables.cs" />
+    <Compile Include="SQLObjects\OrderBy.cs" />
+    <Compile Include="SQLObjects\Query.cs" />
     <Compile Include="SQLObjects\Select.cs" />
     <Compile Include="SQLObjects\Where.cs" />
     <Compile Include="Startup.cs" />

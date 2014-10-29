@@ -1,41 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Moxalytics.SQLObjects
+namespace Moxtest
 {
     public class Where
     {
-        public int index;
-        public string Logic = "AND";
-        public string Column = string.Empty;
-        public string Table = string.Empty;
-        public string Database = string.Empty;
-        public string Server = string.Empty;
-        public object Value = string.Empty;
-        public string WhereString = string.Empty;
+        public Column columnDefault = null;
+        public Column columnCompair = null;
+        public Between between = null;
+        public string bLogic = null; 
+        public string operand = null;
+        public string like = null;
+        public string value = null;
+        public string whereString = null;
 
-        public string generateWHERE()
-        {
-            if (index == 0)
-            { 
-               WhereString = " WHERE " + Table + "." + Column + " = '" + Value + "'";
+        public string constructWhere()
+        {   
+            if (between != null)
+            {    
+               whereString = " " + columnDefault + " BETWEEN '" + between.start + "' AND '" + between.end + "'";               
             }
-               
-            else
+            else if(like != null)
             {
-                if (Logic == "AND")
-                {
-                   WhereString = " AND [" + Table + "].[" + Column +"] = '" + Value +"'";
-                }
-                if (Logic == "OR")
-                {
-                    WhereString = " OR [" + Table + "].[" + Column + "] = '" + Value + "'";
-                }
+                whereString = " " + columnDefault + " LIKE '%" + value + "%'";
+            }       
+            else if(columnCompair == null)
+            {
+                whereString = " " + columnDefault + " = " + value + " ";
             }
-
-            return WhereString;
         }
     }
 }
