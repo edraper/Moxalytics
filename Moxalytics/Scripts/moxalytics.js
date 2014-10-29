@@ -1,7 +1,4 @@
-(function () {
-  'use strict';
-
-  angular.module('moxalytics', [
+var moxalytics = angular.module('moxalytics', [
         // Angular modules
         'ngAnimate', // Remove if unused
         'ngRoute' // Remove if unused
@@ -10,17 +7,19 @@
 
         // 3rd Party Modules
 
-  ])
+  ]);
+
     // Might also want a report controller
-    .factory('reportFactory', function($http) {
-        // Holds the report data returned from the server
-        // Needs implementation details
-        var service = {};
+  moxalytics.factory('reportFactory', function($http) {
+      // Holds the report data returned from the server
+      // Needs implementation details
+      var service = {};
 
-        return service;
+      return service;
 
-      })
-    .factory('dataFactory', function ($http) {
+  });
+
+  moxalytics.factory('dataFactory', function ($http) {
       // Any database object should be of the form:
       // {
       //  "name": "db1",
@@ -49,78 +48,78 @@
       };
 
       service.addJoin = function (type, leftDatabase, rightDatabase) {
-        if (type === "INNER")
-          innerjoinTables.add({
-            "leftTable": leftDatabase,
-            "rightTable": rightDatabase
-          });
-        else if (type === "OUTER")
-          outerjoinTables.add({
-            "leftTable": leftDatabase,
-            "rightTable": rightDatabase
-          });
-        else
-          alert("Invalid join type."); // Might want to change this to just show in a message box instead.
+          if (type === "INNER")
+              innerjoinTables.add({
+                  "leftTable": leftDatabase,
+                  "rightTable": rightDatabase
+              });
+          else if (type === "OUTER")
+              outerjoinTables.add({
+                  "leftTable": leftDatabase,
+                  "rightTable": rightDatabase
+              });
+          else
+              alert("Invalid join type."); // Might want to change this to just show in a message box instead.
       };
 
       // Needs updating for new JSON format. Can you do "distinct" where it is both true and false?
       // The call will also need to change.
       service.addSelect = function (database, asName, max, min, distinct, top, average, count, first, last, sum) {
-        // Check for empty values
-        // For unused fields, an empty string, "", is passed.
-        asName = typeof asName !== 'undefined' ? asName : "";
-        max = typeof max !== 'undefined' ? max : "";
-        min = typeof min !== 'undefined' ? min : "";
-        distinct = typeof distinct !== 'undefined' ? distinct : "";
-        top = typeof top !== 'undefined' ? top : "";
-        average = typeof average !== 'undefined' ? average : "";
-        count = typeof count !== 'undefined' ? count : "";
-        first = typeof first !== 'undefined' ? first : "";
-        last = typeof last !== 'undefined' ? last : "";
-        sum = typeof sum !== 'undefined' ? sum : "";
+          // Check for empty values
+          // For unused fields, an empty string, "", is passed.
+          asName = typeof asName !== 'undefined' ? asName : "";
+          max = typeof max !== 'undefined' ? max : "";
+          min = typeof min !== 'undefined' ? min : "";
+          distinct = typeof distinct !== 'undefined' ? distinct : "";
+          top = typeof top !== 'undefined' ? top : "";
+          average = typeof average !== 'undefined' ? average : "";
+          count = typeof count !== 'undefined' ? count : "";
+          first = typeof first !== 'undefined' ? first : "";
+          last = typeof last !== 'undefined' ? last : "";
+          sum = typeof sum !== 'undefined' ? sum : "";
 
-        select.add({
-          "database": database,
-          "as": asName,
-          "max": max,
-          "min": min,
-          "distinct": distinct,
-          "top": top,
-          "average": average,
-          "count": count,
-          "first": first,
-          "last": last,
-          "sum": sum
-        });
+          select.add({
+              "database": database,
+              "as": asName,
+              "max": max,
+              "min": min,
+              "distinct": distinct,
+              "top": top,
+              "average": average,
+              "count": count,
+              "first": first,
+              "last": last,
+              "sum": sum
+          });
       };
 
       service.addWhere = function (columnDefault, columnCompare, blogic, betweenStart, betweenEnd, operand, like, val) {
-        // columnDefault and columnCompare should be database objects
-        where.add({
-          "columnDefault": columnDefault,
-          "columnCompare": columnCompare,
-          "blogic": blogic,
-          "between": {
-              "start": betweenStart.toString(),
-              "end": betweenEnd.toString()
-          },
-          "operand": operand,
-          "like": like,
-          "value": val
-        });
+          // columnDefault and columnCompare should be database objects
+          where.add({
+              "columnDefault": columnDefault,
+              "columnCompare": columnCompare,
+              "blogic": blogic,
+              "between": {
+                  "start": betweenStart.toString(),
+                  "end": betweenEnd.toString()
+              },
+              "operand": operand,
+              "like": like,
+              "value": val
+          });
       };
 
       service.addFrom = function (database) {
-        from = database;
-        //from.isJoin = isJoin;
+          from = database;
+          //from.isJoin = isJoin;
       };
 
       service.addOrderBy = function (column, orderType) {
-        // column is a database object
-        orderby.add({
-          "column": column,
-          "orderType": orderType
-        });
+          // column is a database object
+          orderby.add({
+              "column": column,
+              "orderType": orderType
+          });
       };
 
       service.submitReportParameters = function() {
@@ -128,11 +127,11 @@
           joins.add({
               "type": "INNER",
               "joinTables": innerjoinTables
-            },
+          },
             {
-              "type": "OUTER",
-              "joinTables": outerjoinTables
-          });
+                "type": "OUTER",
+                "joinTables": outerjoinTables
+            });
       
           var params = {};
           params.JOINS = joins;
@@ -146,10 +145,10 @@
           // Data needs to be POSTed to api/Database
       };
 
-    return service;
-  })
+      return service;
+  });
 
-  .controller('DatabaseController', ['$scope', '$http',
+  moxalytics.controller('DatabaseController', ['$scope', '$http',
     function ($scope, $http, dataFactory) {
       // Need layout for structure here.
       $scope.databases = []; // Might need to move this to its own factory. Don't know whether to use [] or {}.
@@ -205,4 +204,3 @@
         // https://stackoverflow.com/questions/17129132/ng-repeat-dosnt-update-itself-after-inserting-new-item-using-dialog
       };
     }]);
-})();

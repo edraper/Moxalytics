@@ -11,3 +11,5 @@
 /// <reference path="modernizr-2.6.2.js" />
 /// <reference path="moxalytics.js" />
 /// <reference path="respond.js" />
+/// <reference path="angular-animate.min.js" />
+/// <reference path="dbui.js" />
