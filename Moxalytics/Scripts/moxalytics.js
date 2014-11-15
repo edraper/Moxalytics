@@ -181,6 +181,7 @@ var moxalytics = angular.module('moxalytics', [
       };
 
       // Use this function for testing things.
+      // Change to whatever you need.
       $scope.testFunction = function () {
           $http.get('api/Database/' + $scope.server + "/" + "table1").success(function(data) {
               console.log(data);
