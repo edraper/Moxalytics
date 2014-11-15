@@ -46,15 +46,5 @@ namespace Moxalytics.Controllers
         {
             // This might be moving to the ReportController
         }
-
-        // PUT: api/Database/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Database/5
-        public void Delete(int id)
-        {
-        }
     }
 }

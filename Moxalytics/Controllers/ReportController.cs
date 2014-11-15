@@ -30,6 +30,7 @@ namespace Moxalytics.Controllers
         // POST: api/Report
         public void Post([FromBody]string value)
         {
+            // Might want to use for saving the report.
             // Receive the report parameters and forward them to the backend.
         }
     }

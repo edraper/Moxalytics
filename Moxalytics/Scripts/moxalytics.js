@@ -183,9 +183,10 @@ var moxalytics = angular.module('moxalytics', [
       // Use this function for testing things.
       // Change to whatever you need.
       $scope.testFunction = function () {
-          $http.get('api/Database/' + $scope.server + "/" + "table1").success(function(data) {
-              console.log(data);
-          });
+        // Pass multiple parameters to the server.
+        $http.get('api/Database/' + $scope.server + "/" + "table1").success(function (data) {
+          console.log(data);
+        });
       };
 
       // getTables may need to be removed. Depends on what calls are necessary. Might want to get everything in one call...
