@@ -180,6 +180,13 @@ var moxalytics = angular.module('moxalytics', [
         });
       };
 
+      // Use this function for testing things.
+      $scope.testFunction = function () {
+          $http.get('api/Database/' + $scope.server + "/" + "table1").success(function(data) {
+              console.log(data);
+          });
+      };
+
       // getTables may need to be removed. Depends on what calls are necessary. Might want to get everything in one call...
       $scope.getTables = function (dbName) {
         // dbName should be preformatted to the correct url. Example esp\xray

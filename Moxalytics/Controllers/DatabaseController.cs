@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Moxalytics.Models;
 
+// Use for getting information about the databases and the data contained within them.
 namespace Moxalytics.Controllers
 {
     [RoutePrefix("api/Database")]
@@ -29,11 +30,21 @@ namespace Moxalytics.Controllers
             return sqlCommand.getDBsOnServer(server);
         }
 
+        // GET: api/Database/server/table
+        [Route("{server}/{table}")]
+        public IEnumerable<string> Get(string server, string table)
+        {
+            // Test call. This works properly.
+            // Call api/Database/servername/tablename
+            List<string> list = new List<string> {"server: " + server, "table: " + table};
+            return list;
+        }
+
         // POST: api/Database
         // POSTs the SQL operations to the server. Data will need to be sanitized.
         public void Post([FromBody]string value)
         {
-
+            // This might be moving to the ReportController
         }
 
         // PUT: api/Database/5
