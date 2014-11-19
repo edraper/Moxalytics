@@ -15,10 +15,13 @@ namespace Moxalytics.Controllers
     {
         private SQLCommand sqlCommand = new SQLCommand();
 
+        // May want a get all method... Get() api/Database perhaps?
+        
         // GET: api/Database
         [Route("")]
         public IEnumerable<string> Get()
         {
+            // Maybe turn this into a generic call that gets everything?
             return new string[] { "Please select a", "server" };
         }
 
@@ -26,18 +29,28 @@ namespace Moxalytics.Controllers
         [Route("{server}")]
         public IEnumerable<string> Get(string server)
         {
+            // Returns a list of the databases on the specified server
             server = server.Replace("--", "\\"); // The -- is used to represent a \, for example esp\xray
             return sqlCommand.getDBsOnServer(server);
         }
 
-        // GET: api/Database/server/table
-        [Route("{server}/{table}")]
-        public IEnumerable<string> Get(string server, string table)
+        // GET: api/Database/server/database
+        [Route("{server}/{database}")]
+        public IEnumerable<string> Get(string server, string database)
         {
-            // Test call. This works properly.
-            // Call api/Database/servername/tablename
-            List<string> list = new List<string> {"server: " + server, "table: " + table};
-            return list;
+            // Call api/Database/servername/databasename;
+            server = server.Replace("--", "\\");
+            // Don't know how this is going to work with spaces in the database name ...
+            // May need to do some additional parsing to remove + or %20 (for spaces)
+            return sqlCommand.getTablesInDatabase(server, database);
+        }
+
+        [Route("{server}/{database}/{table}")]
+        public IEnumerable<string> Get(string server, string database, string table)
+        {
+            server = server.Replace("--", "\\");
+            // Might need some parsing here as well. See server/database above.
+            return sqlCommand.getColumnsInTable(server, database, table);
         }
 
         // POST: api/Database

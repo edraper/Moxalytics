@@ -179,6 +179,33 @@ var moxalytics = angular.module('moxalytics', [
           console.log("Unable to load databases.\n" + data.toString());
         });
       };
+      
+      // Gets the tables for a specified database
+      $scope.getTables = function (database) {
+        $http.get('api/Database/' + $scope.server + "/" + database).success(function (data) {
+          console.log(data);
+          console.log("testing getting tables for a specific database");
+          //$scope.databases = data.databases;//
+          // $scope.databases.databasename.tables = data.tables? //
+        }).
+        error(function (data) {
+          console.log("Unable to load tables for " + database + ".\n" + data.toString());
+        });
+      };
+
+      // Gets the columns for a specified database and table.
+      $scope.getColumns = function (database, table) {
+        $http.get('api/Database/' + $scope.server + "/" + database + "/" + table).success(function (data) {
+          console.log(data);
+          console.log("testing getting columns for a specific table");
+          //$scope.databases = data.databases;//
+          // $scope.databases.databasename.tables.tablename.columns = data.columns? //
+          // This statement might not even be syntactically correct. It just depends on how we receive the data.
+        }).
+        error(function (data) {
+          console.log("Unable to load columns for " + table + ".\n" + data.toString());
+        });
+      };
 
       // Use this function for testing things.
       // Change to whatever you need.
@@ -187,21 +214,6 @@ var moxalytics = angular.module('moxalytics', [
         $http.get('api/Database/' + $scope.server + "/" + "table1").success(function (data) {
           console.log(data);
         });
-      };
-
-      // getTables may need to be removed. Depends on what calls are necessary. Might want to get everything in one call...
-      $scope.getTables = function (dbName) {
-        // dbName should be preformatted to the correct url. Example esp\xray
-        $http.get(dbName).success(function (data) {
-          $scope.tables = data.tables;
-        }).
-        error(function (data) {
-          console.log("Unable to load tables for " + dbName + "\n" + data.toString());
-        });
-      };
-
-      $scope.getColumns = function (dbName, table) {
-
       };
 
       $scope.expandDatabase = function () {
