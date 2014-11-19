@@ -31,6 +31,7 @@ namespace Moxalytics.Controllers
         {
             // Returns a list of the databases on the specified server
             server = server.Replace("--", "\\"); // The -- is used to represent a \, for example esp\xray
+            var test = sqlCommand.getDBsOnServer(server);
             return sqlCommand.getDBsOnServer(server);
         }
 

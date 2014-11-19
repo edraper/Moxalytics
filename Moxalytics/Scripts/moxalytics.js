@@ -154,7 +154,8 @@ var moxalytics = angular.module('moxalytics', [
       $scope.databases = []; // Might need to move this to its own factory. Don't know whether to use [] or {}.
       // Might want to include the tables in the databases object.
       $scope.databases.tables = [];
-      $scope.server = "esp--xray"; // This will need to be changed based on the server the user selects. The -- is used in place of a \. Helps in api calls.
+      //$scope.server = "esp--xray"; // This will need to be changed based on the server the user selects. The -- is used in place of a \. Helps in api calls.
+      $scope.server = "esp/xray";
 
       // Load json data using $http. This is automatically called when the page is loaded.
       $http.get('api/Database/' + $scope.server).success(function (data) {
@@ -178,6 +179,7 @@ var moxalytics = angular.module('moxalytics', [
         error(function (data) {
           console.log("Unable to load databases.\n" + data.toString());
         });
+        //$scope.getTables()
       };
       
       // Gets the tables for a specified database

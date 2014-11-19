@@ -73,7 +73,7 @@ namespace Moxalytics.Models
                 }
                 finally
                 {
-                    reader.Close();
+                    if (reader != null) reader.Close();
                 }
             }
             
@@ -115,7 +115,7 @@ namespace Moxalytics.Models
                 }
                 finally
                 {
-                    readerColumn.Close();
+                    if (readerColumn != null) readerColumn.Close();
                 }
 
                 return ColumnList;
@@ -156,7 +156,7 @@ namespace Moxalytics.Models
                 }
                 finally
                 {
-                    readerDB.Close();
+                    if (readerDB != null) readerDB.Close();
                 }
                 return tableList;
             }
