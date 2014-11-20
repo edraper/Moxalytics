@@ -177,6 +177,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\DBUI.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\SQLCommand.cs" />
@@ -216,6 +217,7 @@
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Content\testdata\testdata.json" />
     <Content Include="Content\testdata\testdata2.json" />
+    <Content Include="Scripts\dbui.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\dbui.js" />

@@ -1,7 +1,8 @@
 var moxalytics = angular.module('moxalytics', [
         // Angular modules
         'ngAnimate', // Remove if unused
-        'ngRoute' // Remove if unused
+        'ngRoute', // Remove if unused
+        'ngResource'
 
         // Custom modules
 

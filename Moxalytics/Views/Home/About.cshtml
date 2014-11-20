@@ -2,33 +2,47 @@
     <div ng-controller="DBUIController">
         <span>{{TEXT1}}</span>
         <a href="" ng-click="getDatabases()">Get databases (if database views don't load automatically).</a><br />
-        <div class="col-md-4" ng-repeat="database in databases">
+        @*<div class="col-md-4" ng-repeat="database in databases">
             <img src="~/Content/dbicon.png" /><span>{{TEXT1}}</span>
             <ul class="table-list">
                 <li ng-repeat="table in database.tables">
-                    <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" /><span></span>
+                    <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" />
+                    <span></span>
                 </li>
                 <li>Click a field to add to report.</li>
             </ul>
+        </div>*@
+
+
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+
+        <div class="col-md-4">
+            <img src="~/Content/dbicon.png" />Database 1<br />
+            <img src="~/Content/expandicon.png" /><img src="~/Content/folder_black.png" height="15px" />Table<br />
+            <img src="~/Content/expandicon.png" /><img src="~/Content/folder_black.png" height="15px" />Table<br />
+            <img src="~/Content/expandicon.png" /><img src="~/Content/folder_black.png" height="15px" />Table<br />
+            <img src="~/Content/collapseicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />Field<br />Field<br />Field<br />
+            <p>Click a field to add to report.</p>
         </div>
-    </div>
-
-    <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-
-    <div class="col-md-4">
-        <img src="~/Content/dbicon.png" />Database 1<br />
-        <img src="~/Content/expandicon.png" /><img src="~/Content/folder_black.png" height="15px" />Table<br />
-        <img src="~/Content/expandicon.png" /><img src="~/Content/folder_black.png" height="15px" />Table<br />
-        <img src="~/Content/expandicon.png" /><img src="~/Content/folder_black.png" height="15px" />Table<br />
-        <img src="~/Content/collapseicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />Field<br />Field<br />Field<br />
-        <p>Click a field to add to report.</p>
-    </div>
-    <div class="col-md-4">
-        <img src="~/Content/dbicon.png" />Database 2<br />
-        <img src="~/Content/expandicon.png" /><img src="~/Content/folder_black.png" height="15px" />Table<br />
-        <img src="~/Content/expandicon.png" /><img src="~/Content/folder_black.png" height="15px" />Table<br />
-        <img src="~/Content/expandicon.png" /><img src="~/Content/folder_black.png" height="15px" />Table<br />
-        <img src="~/Content/collapseicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />Field<br />Field<br />Field<br />
-        <p>Click a field to add to report.</p>
+        <div class="col-md-4">
+            <img src="~/Content/dbicon.png" />Database 2<br />
+            <img src="~/Content/expandicon.png" /><img src="~/Content/folder_black.png" height="15px" />Table<br />
+            <img src="~/Content/expandicon.png" /><img src="~/Content/folder_black.png" height="15px" />Table<br />
+            <img src="~/Content/expandicon.png" /><img src="~/Content/folder_black.png" height="15px" />Table<br />
+            <img src="~/Content/collapseicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />Field<br />Field<br />Field<br />
+            <p>Click a field to add to report.</p>
+        </div>
+        <div class="col-md-4">
+            <div ng-repeat="database in databases">
+                <p>Database</p>
+                <span ng-bind="name"></span>
+                <div ng-repeat="table in database.tables">
+                    <p>Table</p>
+                    <div ng-repeat="field in table.fields">
+                        <p>Field</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
