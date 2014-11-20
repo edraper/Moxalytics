@@ -226,3 +226,47 @@ var moxalytics = angular.module('moxalytics', [
         // https://stackoverflow.com/questions/17129132/ng-repeat-dosnt-update-itself-after-inserting-new-item-using-dialog
       };
     }]);
+
+  // Example data layout for the information about the databases...
+  service = {
+      databases: [
+          {
+              name: "steve",
+              tables: [
+                  {
+                      name: "table_steve",
+                      columns: [
+                          "column1",
+                          "column2"
+                      ]
+                  },
+                  {
+                      name: "table2_steve",
+                      columns: [
+                          "column3",
+                          "column4"
+                      ]
+                  }
+              ]
+          },
+          {
+              name: "bob",
+              tables: [
+                  {
+                      name: "table_bob",
+                      columns: [
+                          "column5",
+                          "column6"
+                      ]
+                  },
+                  {
+                      name: "table2_bob",
+                      columns: [
+                          "column7",
+                          "column8"
+                      ]
+                  }
+              ]
+          }
+      ]
+  };
