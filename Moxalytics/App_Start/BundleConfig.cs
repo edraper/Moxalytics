@@ -19,6 +19,7 @@ namespace Moxalytics
                 "~/Scripts/angular.js",
                 "~/Scripts/angular-animate.js",
                 "~/Scripts/angular-route.js",
+                "~/Scripts/angular-resource.js",
                 "~/Scripts/moxalytics.js",
                 "~/Scripts/dbui.js"));
 
