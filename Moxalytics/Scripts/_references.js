@@ -13,3 +13,5 @@
 /// <reference path="angular-route.min.js" />
 /// <reference path="angular-animate.min.js" />
 /// <reference path="angular-resource.min.js" />
+/// <reference path="createpdf.js" />
+/// <reference path="jspdf.min.js" />

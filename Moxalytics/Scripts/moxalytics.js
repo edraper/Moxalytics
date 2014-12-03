@@ -76,8 +76,6 @@ var moxalytics = angular.module('moxalytics', [
   moxalytics.controller('ReportController', ['$scope', '$http', 'reportFactory',
     function ($scope, $http, reportFactory) {
       $scope.report = reportFactory.getReport();
-      console.log($scope.report);
-      test = $scope.report;
     }]);
 
   moxalytics.factory('dataFactory', function ($http) {
