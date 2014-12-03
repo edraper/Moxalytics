@@ -31,6 +31,7 @@ var moxalytics = angular.module('moxalytics', [
       };
 
     // Or like this
+    // Currently using this one.
       var reportAlt = {
         reportInformation: "Database 2: Employees, Sales | Database 3: Products, Testing",
         date: "Date Generated",
