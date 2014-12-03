@@ -13,7 +13,7 @@
     </tr>
     <tbody>
       <tr ng-repeat="row in report.rows">
-        <td @*ng-class="{text-left: $first}"*@ class="text-center" ng-repeat="name in report.columns">{{row[name]}}</td>
+        <td ng-class="{'text-left': $first}" class="text-center" ng-repeat="name in report.columns">{{row[name]}}</td>
       </tr>
     </tbody>
   </table>
