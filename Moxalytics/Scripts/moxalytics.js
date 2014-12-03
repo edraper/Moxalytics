@@ -1,3 +1,4 @@
+var test;
 var moxalytics = angular.module('moxalytics', [
         // Angular modules
         'ngAnimate', // Remove if unused
@@ -15,10 +16,68 @@ var moxalytics = angular.module('moxalytics', [
       // Holds the report data returned from the server
       // Needs implementation details
       var service = {};
+      var report = {
+        reportInformation: "Database 2: Employees, Sales | Database 3: Products, Testing",
+        date: "Date Generated",
+        columns: [
+          { header: "Id", rows: ["123", "234"] },
+          { header: "ItemName", rows: ["Lens", "Frame"] },
+          { header: "Description", rows: ["A lens to see", "A frame for a lens"] },
+          { header: "Stock", rows: ["150", "15"] },
+          { header: "ItemId", rows: ["5679435", "1534723"] },
+          { header: "Lifetime", rows: ["400000", "300000"] },
+          { header: "Notes", rows: ["Needs reordering", "In stock"] }
+        ],
+      };
 
-      return service;
+    // Or like this
+      var reportAlt = {
+        reportInformation: "Database 2: Employees, Sales | Database 3: Products, Testing",
+        date: "Date Generated",
+        columns: ["Id", "ItemName", "Description", "Stock", "ItemId", "Lifetime", "Notes"],
+        rows: [
+          {
+            "Id": "123", 
+            "ItemName": "Lens",
+            "Description": "A lens to see.",
+            "Stock": "150",
+            "ItemId": "5679435",
+            "Lifetime": "400000",
+            "Notes": "Needs reordering"
+          },
+          {
+            "Id": "234",
+            "ItemName": "Frame",
+            "Description": "A frame for a lens.",
+            "Stock": "15",
+            "ItemId": "1534723",
+            "Lifetime": "300000",
+            "Notes": "In Stock"
+          }
+        ]
+      };
 
+    service.getReport = function() {
+      return reportAlt;
+    };
+
+    //service = report;
+    return service;
   });
+
+  //moxalytics.directive('reportDirective', function() {
+  //  return {
+  //    restrict: 'A'
+  //    ///...
+  //  };
+  //});
+
+  moxalytics.controller('ReportController', ['$scope', '$http', 'reportFactory',
+    function ($scope, $http, reportFactory) {
+      $scope.report = reportFactory.getReport();
+      console.log($scope.report);
+      test = $scope.report;
+    }]);
 
   moxalytics.factory('dataFactory', function ($http) {
       // Any database object should be of the form:
@@ -149,7 +208,7 @@ var moxalytics = angular.module('moxalytics', [
       return service;
   });
 
-  moxalytics.controller('DatabaseController', ['$scope', '$http',
+  moxalytics.controller('DatabaseController', ['$scope', '$http', 'dataFactory', 
     function ($scope, $http, dataFactory) {
       // Need layout for structure here.
       $scope.databases = []; // Might need to move this to its own factory. Don't know whether to use [] or {}.
@@ -165,7 +224,7 @@ var moxalytics = angular.module('moxalytics', [
         //$scope.$apply(); //Might need this here...
       }).
       error(function (data) {
-        console.log("Unable to load databases.\n" + data.toString());
+        //console.log("Unable to load databases.\n" + data.toString());
       });
 
       // Loads the list of databases and tables. Call if the database views need to be loaded manually.
@@ -177,7 +236,7 @@ var moxalytics = angular.module('moxalytics', [
           //$scope.databases = data.databases;//
         }).
         error(function (data) {
-          console.log("Unable to load databases.\n" + data.toString());
+          //console.log("Unable to load databases.\n" + data.toString());
         });
         //$scope.getTables()
       };

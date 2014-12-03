@@ -24,5 +24,10 @@ namespace Moxalytics.Controllers
 
             return View();
         }
+
+        public ActionResult Report()
+        {
+            return View();
+        }
     }
 }

@@ -1,0 +1,15 @@
+﻿<h2>Report</h2>
+
+<div class="container">
+  <table ng-controller="ReportController" class="table-bordered">
+    <caption>{{report.reportInformation}}</caption>
+    <colgroup span="{{report.columns.length}}"></colgroup>
+    <tr>
+      <th ng-repeat="name in report.columns">{{name}}</th>
+    </tr>
+    <tr ng-repeat="row in report.rows">
+      <td ng-repeat="item in row">{{item}}</td>
+    </tr>
+  </table>
+</div>
+
