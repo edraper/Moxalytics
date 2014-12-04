@@ -9,7 +9,7 @@
 </div>
 <div class="container" id="reportContainer">
   <table ng-controller="ReportController" class="table table-striped table-hover">
-    <caption class="text-left">{{report.reportInformation}}</caption>
+    <caption class="text-left" id="reportCaption">{{report.reportInformation}}</caption>
     @*<colgroup span="{{report.columns.length}}"></colgroup>*@
     <tr>
       <th class="text-center" ng-repeat="name in report.columns">{{name}}</th>

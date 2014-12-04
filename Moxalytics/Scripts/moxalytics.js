@@ -1,3 +1,5 @@
+// Work on the SELECT query stuff.
+
 var test;
 var moxalytics = angular.module('moxalytics', [
         // Angular modules
@@ -16,19 +18,19 @@ var moxalytics = angular.module('moxalytics', [
       // Holds the report data returned from the server
       // Needs implementation details
       var service = {};
-      var report = {
-        reportInformation: "Database 2: Employees, Sales | Database 3: Products, Testing",
-        date: "Date Generated",
-        columns: [
-          { header: "Id", rows: ["123", "234"] },
-          { header: "ItemName", rows: ["Lens", "Frame"] },
-          { header: "Description", rows: ["A lens to see", "A frame for a lens"] },
-          { header: "Stock", rows: ["150", "15"] },
-          { header: "ItemId", rows: ["5679435", "1534723"] },
-          { header: "Lifetime", rows: ["400000", "300000"] },
-          { header: "Notes", rows: ["Needs reordering", "In stock"] }
-        ],
-      };
+      //var report = {
+      //  reportInformation: "Database 2: Employees, Sales | Database 3: Products, Testing",
+      //  date: "Date Generated",
+      //  columns: [
+      //    { header: "Id", rows: ["123", "234"] },
+      //    { header: "ItemName", rows: ["Lens", "Frame"] },
+      //    { header: "Description", rows: ["A lens to see", "A frame for a lens"] },
+      //    { header: "Stock", rows: ["150", "15"] },
+      //    { header: "ItemId", rows: ["5679435", "1534723"] },
+      //    { header: "Lifetime", rows: ["400000", "300000"] },
+      //    { header: "Notes", rows: ["Needs reordering", "In stock"] }
+      //  ],
+      //};
 
     // Or like this
     // Currently using this one.
@@ -65,13 +67,6 @@ var moxalytics = angular.module('moxalytics', [
     //service = report;
     return service;
   });
-
-  //moxalytics.directive('reportDirective', function() {
-  //  return {
-  //    restrict: 'A'
-  //    ///...
-  //  };
-  //});
 
   moxalytics.controller('ReportController', ['$scope', '$http', 'reportFactory',
     function ($scope, $http, reportFactory) {
