@@ -6,7 +6,7 @@ $('#downloadButton').click(function () {
 
   var source = $('#reportContainer').html();
 
-  pdf.fromHTML(source, 0, 5, 0, 5, { 'width': 7.5 });
+  pdf.fromHTML(source, 75, 35, 0, 35, { 'width': 12 });
 
   pdf.output("dataurlnewwindow");
 });
