@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -56,9 +57,12 @@ namespace Moxalytics.Controllers
 
         // POST: api/Database
         // POSTs the SQL operations to the server. Data will need to be sanitized.
-        public void Post([FromBody]string value)
+        [Route("")]
+        public IEnumerable<string> Post([FromBody]string value)
         {
             // This might be moving to the ReportController
+            List<string> l = new List<string>() { "test" };
+            return l;
         }
     }
 }

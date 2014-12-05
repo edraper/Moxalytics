@@ -9,5 +9,9 @@ $('#downloadButton').click(function () {
     pdf.text(20, 20, $('#reportCaption').text());
   pdf.fromHTML(source, 75, 35, 0, 35, { 'width': 12 });
 
-  pdf.output("dataurlnewwindow");
+  try {
+    pdf.output('save', $('#reportCaption').text() + '.pdf');
+  } catch (e) {
+    pdf.output("dataurlnewwindow");
+  }
 });

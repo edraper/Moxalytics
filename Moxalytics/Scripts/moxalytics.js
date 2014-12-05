@@ -221,6 +221,16 @@ var moxalytics = angular.module('moxalytics', [
         //console.log("Unable to load databases.\n" + data.toString());
       });
 
+      $scope.submitReport = function() {
+        $http.post('api/Database', 'hello'/*JSON.stringify(dataFactory.submitReportParameters())*/).success(function (data) {
+            console.log("test");
+            console.log(data);
+          }).
+          error(function(data) {
+            console.log(data);
+          });
+      };
+
       // Loads the list of databases and tables. Call if the database views need to be loaded manually.
       $scope.getDatabases = function () {
         $http.get('api/Database/' + $scope.server).success(function (data) {
