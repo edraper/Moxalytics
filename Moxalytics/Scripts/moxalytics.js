@@ -87,7 +87,7 @@ var moxalytics = angular.module('moxalytics', [
       var select = [];
       var fields = [];
       var where = [];
-      var from = {};
+      var from = [];
       var orderby = [];
 
       // All parameters should be strings
@@ -103,12 +103,12 @@ var moxalytics = angular.module('moxalytics', [
 
       service.addJoin = function (type, leftDatabase, rightDatabase) {
           if (type === "INNER")
-              innerjoinTables.add({
+              innerjoinTables.push({
                   "leftTable": leftDatabase,
                   "rightTable": rightDatabase
               });
           else if (type === "OUTER")
-              outerjoinTables.add({
+              outerjoinTables.push({
                   "leftTable": leftDatabase,
                   "rightTable": rightDatabase
               });
@@ -132,7 +132,7 @@ var moxalytics = angular.module('moxalytics', [
           last = typeof last !== 'undefined' ? last : "";
           sum = typeof sum !== 'undefined' ? sum : "";
 
-          select.add({
+          select.push({
               "database": database,
               "as": asName,
               "max": max,
@@ -149,7 +149,7 @@ var moxalytics = angular.module('moxalytics', [
 
       service.addWhere = function (columnDefault, columnCompare, blogic, betweenStart, betweenEnd, operand, like, val) {
           // columnDefault and columnCompare should be database objects
-          where.add({
+          where.push({
               "columnDefault": columnDefault,
               "columnCompare": columnCompare,
               "blogic": blogic,
@@ -164,13 +164,13 @@ var moxalytics = angular.module('moxalytics', [
       };
 
       service.addFrom = function (database) {
-          from = database;
+          from = [database];
           //from.isJoin = isJoin;
       };
 
       service.addOrderBy = function (column, orderType) {
           // column is a database object
-          orderby.add({
+          orderby.push({
               "column": column,
               "orderType": orderType
           });
@@ -178,7 +178,7 @@ var moxalytics = angular.module('moxalytics', [
 
       service.submitReportParameters = function() {
           // Generate the js object to send from the stored data.
-          joins.add({
+          joins.push({
               "type": "INNER",
               "joinTables": innerjoinTables
           },
@@ -193,10 +193,27 @@ var moxalytics = angular.module('moxalytics', [
           params.WHERE = where;
           params.FROM = from;
           params.ORDERBY = orderby;
+
+          console.log(params);
       
           // Insert code from other project (branch) (Todd).
           // Send the code to the server
           // Data needs to be POSTed to api/Database
+          $http.post(
+              'api/Database',
+              JSON.stringify(params),
+              {
+                  header: {
+                      'Content-Type': 'application/json'
+                  }
+              })
+              .success(function (data) {
+                  console.log(data);
+                  localStorage["report"] = data;
+              })
+              .error(function (data) {
+                  console.log(data);
+              });
       };
 
       return service;
@@ -222,23 +239,8 @@ var moxalytics = angular.module('moxalytics', [
       });
 
       $scope.submitReport = function() {
-          $http.post(
-              'api/Database',
-              JSON.stringify({
-                  "test": "value"
-                }),
-              {
-                  header: {
-                      'Content-Type': 'application/json'
-                  }
-              } /*JSON.stringify(dataFactory.submitReportParameters())*/).success(function(data) {
-                    console.log("test");
-                    console.log(data);
-                }).
-                error(function(data) {
-                    console.log(data);
-                });
-        }
+          dataFactory.submitReportParameters();
+      }
 
         // Loads the list of databases and tables. Call if the database views need to be loaded manually.
       $scope.getDatabases = function () {
