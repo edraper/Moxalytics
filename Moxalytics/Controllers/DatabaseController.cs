@@ -58,11 +58,10 @@ namespace Moxalytics.Controllers
         // POST: api/Database
         // POSTs the SQL operations to the server. Data will need to be sanitized.
         [Route("")]
-        public IEnumerable<string> Post([FromBody]string value)
+        public Dictionary<string, string> Post([FromBody]Dictionary<string, string> value)
         {
             // This might be moving to the ReportController
-            List<string> l = new List<string>() { "test" };
-            return l;
+            return value;
         }
     }
 }

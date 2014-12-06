@@ -222,16 +222,25 @@ var moxalytics = angular.module('moxalytics', [
       });
 
       $scope.submitReport = function() {
-        $http.post('api/Database', 'hello'/*JSON.stringify(dataFactory.submitReportParameters())*/).success(function (data) {
-            console.log("test");
-            console.log(data);
-          }).
-          error(function(data) {
-            console.log(data);
-          });
-      };
+          $http.post(
+              'api/Database',
+              JSON.stringify({
+                  "test": "value"
+                }),
+              {
+                  header: {
+                      'Content-Type': 'application/json'
+                  }
+              } /*JSON.stringify(dataFactory.submitReportParameters())*/).success(function(data) {
+                    console.log("test");
+                    console.log(data);
+                }).
+                error(function(data) {
+                    console.log(data);
+                });
+        }
 
-      // Loads the list of databases and tables. Call if the database views need to be loaded manually.
+        // Loads the list of databases and tables. Call if the database views need to be loaded manually.
       $scope.getDatabases = function () {
         $http.get('api/Database/' + $scope.server).success(function (data) {
           console.log(data);
