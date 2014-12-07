@@ -59,9 +59,13 @@ var moxalytics = angular.module('moxalytics', [
           }
         ]
       };
+      console.log(JSON.stringify(reportAlt));
 
-    service.getReport = function() {
-      return reportAlt;
+      service.getReport = function () {
+          var report = JSON.parse(JSON.parse(localStorage["report"]));
+
+          //console.log(JSON.parse(JSON.parse(report)));
+      return report;
     };
 
     //service = report;
@@ -199,9 +203,8 @@ var moxalytics = angular.module('moxalytics', [
 
           console.log(params);
       
-          // Insert code from other project (branch) (Todd).
           // Send the code to the server
-          // Data needs to be POSTed to api/Database
+          // Data is POSTed to api/Database
           $http.post(
               'api/Database',
               JSON.stringify(params),
@@ -213,7 +216,9 @@ var moxalytics = angular.module('moxalytics', [
               .success(function (data) {
                   console.log(data);
                   // Store the returned report data
-                  localStorage["report"] = data;
+                  var storageData = JSON.stringify(data);
+                  localStorage["report"] = storageData; // Converted back to a js object on the report viewer.
+                  console.log(localStorage["report"]);
               })
               .error(function (data) {
                   console.log(data);

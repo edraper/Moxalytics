@@ -16,15 +16,6 @@ using Newtonsoft.Json;
 
 namespace Moxalytics.Controllers
 {
-    //public class Queries
-    //{
-    //    public Var JOINS { get; set; }
-    //    public Var SELECT { get; set; }
-    //    public Var WHERE { get; set; }
-    //    public Var FROM { get; set; }
-    //    public Var ORDERBY { get; set; }
-    //}
-
     [RoutePrefix("api/Database")]
     public class DatabaseController : ApiController
     {
@@ -73,22 +64,14 @@ namespace Moxalytics.Controllers
         // POSTs the SQL operations to the server. Data will need to be sanitized.
         [Route("")]
         [HttpPost]
-        public Dictionary<string, List<Dictionary<string, string>>> Post(object value)
+        public object Post(object value)
         {
-            // This might be moving to the ReportController
-            JavaScriptSerializer js = new JavaScriptSerializer();
-
-            //dynamic obj = js.Deserialize<dynamic>(value);
-
-            //var joins = value["JOINS"];
-            ////var innerJoinTables = joins[0]["type"]; // Get the INNER join tables
-            ////var outerJoinTables = joins[1]["type"];
-            //var select = value["SELECT"];
-            //var where = value["WHERE"];
-            //var from = value["FROM"];
-            //var orderby = value["ORDERBY"];
-
-            return new Dictionary<string, List<Dictionary<string, string>>>();
+            //Dictionary<string, List<Dictionary<string, string>>>
+            //return value;
+            var js = new JsonSerializer();
+            string test =
+                "{\"reportInformation\":\"Database 2: Employees, Sales | Database 3: Products, Testing\",\"date\":\"Date Generated\",\"columns\":[\"Id\",\"ItemName\",\"Description\",\"Stock\",\"ItemId\",\"Lifetime\",\"Notes\"],\"rows\":[{\"Id\":\"123\",\"ItemName\":\"Lens\",\"Description\":\"A lens to see.\",\"Stock\":\"150\",\"ItemId\":\"5679435\",\"Lifetime\":\"400000\",\"Notes\":\"Needs reordering\"},{\"Id\":\"234\",\"ItemName\":\"Frame\",\"Description\":\"A frame for a lens.\",\"Stock\":\"15\",\"ItemId\":\"1534723\",\"Lifetime\":\"300000\",\"Notes\":\"In Stock\"}]}";
+            return test; 
         }
     }
 }
