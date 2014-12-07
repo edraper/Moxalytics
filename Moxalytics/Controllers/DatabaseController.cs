@@ -5,12 +5,26 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web.Helpers;
 using System.Web.Http;
+using System.Web.Script.Serialization;
+using Microsoft.Ajax.Utilities;
 using Moxalytics.Models;
 
 // Use for getting information about the databases and the data contained within them.
+using Newtonsoft.Json;
+
 namespace Moxalytics.Controllers
 {
+    //public class Queries
+    //{
+    //    public Var JOINS { get; set; }
+    //    public Var SELECT { get; set; }
+    //    public Var WHERE { get; set; }
+    //    public Var FROM { get; set; }
+    //    public Var ORDERBY { get; set; }
+    //}
+
     [RoutePrefix("api/Database")]
     public class DatabaseController : ApiController
     {
@@ -58,10 +72,23 @@ namespace Moxalytics.Controllers
         // POST: api/Database
         // POSTs the SQL operations to the server. Data will need to be sanitized.
         [Route("")]
-        public Dictionary<string, List<Dictionary<string, string>>> Post([FromBody]Dictionary<string, List<Dictionary<string, string>>> value)
+        [HttpPost]
+        public Dictionary<string, List<Dictionary<string, string>>> Post(object value)
         {
             // This might be moving to the ReportController
-            return value;
+            JavaScriptSerializer js = new JavaScriptSerializer();
+
+            //dynamic obj = js.Deserialize<dynamic>(value);
+
+            //var joins = value["JOINS"];
+            ////var innerJoinTables = joins[0]["type"]; // Get the INNER join tables
+            ////var outerJoinTables = joins[1]["type"];
+            //var select = value["SELECT"];
+            //var where = value["WHERE"];
+            //var from = value["FROM"];
+            //var orderby = value["ORDERBY"];
+
+            return new Dictionary<string, List<Dictionary<string, string>>>();
         }
     }
 }

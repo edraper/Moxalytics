@@ -178,6 +178,9 @@ var moxalytics = angular.module('moxalytics', [
 
       service.submitReportParameters = function() {
           // Generate the js object to send from the stored data.
+          innerjoinTables.push(service.generateDatabaseObject("TableInner", "TableNameInner", "Column1Inner", "1"));
+          outerjoinTables.push(service.generateDatabaseObject("TableOuter", "TableNameOuter", "Column2Outer", "2"));
+
           joins.push({
               "type": "INNER",
               "joinTables": innerjoinTables
@@ -209,6 +212,7 @@ var moxalytics = angular.module('moxalytics', [
               })
               .success(function (data) {
                   console.log(data);
+                  // Store the returned report data
                   localStorage["report"] = data;
               })
               .error(function (data) {
