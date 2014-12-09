@@ -21,33 +21,36 @@ namespace Moxalytics
             Console.ReadLine();
         }
 
-        public static DataTable runQuery(string connectionString)
+        public static string runQuery(string connectionString, string Server)
         {
-            DataTable dt;
-
-            if(SQL == string.Empty) 
+            DataTable dt = new DataTable();
+            using (SqlConnection con = new SqlConnection("Data Source="+Server+";Initial Catalog=Projects;Integrated Security=true"))
             {
-                return null;
-            }
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlCommand cmd = new SqlCommand(SQL, con))
                 {
-                    SqlCommand command = new SqlCommand(SQL, connection);
-                    command.Connection.Open();
-                    connection.Open();
-                    dt = new DataTable();
-                    dt.Load(command.ExecuteReader());
-                    connection.Close();
+                    con.Open();
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dt);
+                    
+                    System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+                   
+                    List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
+                    Dictionary<string, object> row;
+                   
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        row = new Dictionary<string, object>();
+                        foreach (DataColumn col in dt.Columns)
+                        {
+                            row.Add(col.ColumnName, dr[col]);
+                        }
+                        rows.Add(row);
+                    }
+                 
+                    return serializer.Serialize(rows);
                 }
-
-            }
-            catch
-            {
-                return null;
             }
 
-            return dt;
         }
     }
 }
