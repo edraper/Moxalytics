@@ -22,7 +22,7 @@ namespace Moxalytics
                     joinString = " " + joinTables[i].leftTable.getJoinText() + " " + type + " JOIN" + joinTables[i].rightTable.getJoinText() + " ON" + joinTables[i].leftTable.getJoinColumnText() + " =" + joinTables[i].rightTable.getJoinColumnText();
                 else
                     joinString += " AND" + joinTables[i].leftTable.getJoinColumnText() + " =" + joinTables[i].rightTable.getJoinColumnText();
-                
+
             }
 
             return joinString;
