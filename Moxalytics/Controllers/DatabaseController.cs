@@ -37,6 +37,7 @@ namespace Moxalytics.Controllers
         {
             // Returns a list of the databases on the specified server
             server = server.Replace("--", "\\"); // The -- is used to represent a \, for example esp\xray
+            server = server.Replace(@"\\", @"\");
             var test = sqlCommand.getDBsOnServer(server);
             return sqlCommand.getDBsOnServer(server);
         }
@@ -69,8 +70,12 @@ namespace Moxalytics.Controllers
             //Dictionary<string, List<Dictionary<string, string>>>
             //return value;
             var js = new JsonSerializer();
+            DBInterface dbo = new DBInterface();
+            DBInterface.parseJSON(value.ToString()); 
+           
             string test =
                 "{\"reportInformation\":\"Database 2: Employees, Sales | Database 3: Products, Testing\",\"date\":\"Date Generated\",\"columns\":[\"Id\",\"ItemName\",\"Description\",\"Stock\",\"ItemId\",\"Lifetime\",\"Notes\"],\"rows\":[{\"Id\":\"123\",\"ItemName\":\"Lens\",\"Description\":\"A lens to see.\",\"Stock\":\"150\",\"ItemId\":\"5679435\",\"Lifetime\":\"400000\",\"Notes\":\"Needs reordering\"},{\"Id\":\"234\",\"ItemName\":\"Frame\",\"Description\":\"A frame for a lens.\",\"Stock\":\"15\",\"ItemId\":\"1534723\",\"Lifetime\":\"300000\",\"Notes\":\"In Stock\"}]}";
+                      
             return test; 
         }
     }
