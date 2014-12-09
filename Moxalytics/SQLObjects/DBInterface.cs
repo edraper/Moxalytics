@@ -14,15 +14,23 @@ namespace Moxalytics
       
         public static void parseJSON(string json)
         {
-
-            Query q = JsonConvert.DeserializeObject<Query>(json);
+            try
+            {
+                Query q = JsonConvert.DeserializeObject<Query>(json);            
+            SQL = q.constructSQL();
             
-            Console.WriteLine(q.constructSQL());
-            Console.ReadLine();
+            }catch
+            {
+                //Nothing yet
+            }
+            
         }
 
-        public static string runQuery(string connectionString, string Server)
+        public static string runQuery(string Server)
         {
+            try
+            {
+
             DataTable dt = new DataTable();
             using (SqlConnection con = new SqlConnection("Data Source="+Server+";Initial Catalog=Projects;Integrated Security=true"))
             {
@@ -46,11 +54,18 @@ namespace Moxalytics
                         }
                         rows.Add(row);
                     }
-                 
-                    return serializer.Serialize(rows);
+                  return serializer.Serialize(rows);
+                    
                 }
             }
 
+            }
+            catch
+            {
+                //nothing yet
+            }
+            return null;
+           
         }
     }
 }
