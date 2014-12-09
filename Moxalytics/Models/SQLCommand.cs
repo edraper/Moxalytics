@@ -175,7 +175,7 @@ namespace Moxalytics.Models
 
             //Query Setup
             queryString = "Select * From sys.databases";
-            connectionString = "Data Source= " + Server + "; Integrated Security=True;";
+            connectionString = "Server= esp\\xray; Integrated Security=true";
             
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
