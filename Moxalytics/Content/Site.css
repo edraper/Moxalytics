@@ -23,6 +23,11 @@ textarea {
     max-width: 280px;
 }
 
+.db-operation {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 .database-list {
     list-style-type: none;
     margin-left: 0;

@@ -6,6 +6,11 @@
   <div ng-controller="DatabaseController">
     <a href="" ng-click="getDatabases()">Get databases (if database views don't load automatically).</a><br />
     <a href="" ng-click="getTestDatabases()">Get test databases</a><br />
+    <ul class="nav nav-pills db-operation">
+      <li role="presentation" class="active"><a href="#" data-toggle="tab" ng-click="setOperation('INNERJOIN')">Inner Join</a></li>
+      <li role="presentation"><a href="#" data-toggle="tab" ng-click="setOperation('OUTERJOIN')">Outer Join</a></li>
+      <li role="presentation"><a href="#" data-toggle="tab" ng-click="setOperation('SELECT')">Select</a></li>
+    </ul>
     <div class="col-md-4" ng-repeat="database in databases">
       <img src="~/Content/dbicon.png" /><span>{{database.name}}</span>
       <div class="table-list">
@@ -21,14 +26,17 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div ng-repeat="database in opFields">
-        <span>{{database.name}}</span>
-        <div ng-repeat="table in database.tables" class="table-list">
-          <span>{{table.name}}</span>
-          <div ng-repeat="field in table.fields" class="field-list">
-            <span>{{field}}</span>
+      <div ng-repeat="operation in operations">
+        <h3>{{operation.name}}</h3>
+        <div ng-repeat="database in operation.opFields">
+          <span>{{database.name}}</span>
+          <div ng-repeat="table in database.tables" class="table-list">
+            <span>{{table.name}}</span>
+            <div ng-repeat="field in table.fields" class="field-list">
+              <span>{{field}}</span>
+            </div>
           </div>
-        </div>
+        </div>  
       </div>
       <button ng-click="submitReport()" class="btn btn-default">Run Report</button>
     </div>

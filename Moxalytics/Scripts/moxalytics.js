@@ -59,7 +59,7 @@ var moxalytics = angular.module('moxalytics', [
           }
         ]
       };
-      console.log(JSON.stringify(reportAlt));
+      //console.log(JSON.stringify(reportAlt));
 
       service.getReport = function () {
           var report = JSON.parse(JSON.parse(localStorage["report"]));
@@ -117,7 +117,7 @@ var moxalytics = angular.module('moxalytics', [
                   "rightTable": rightDatabase
               });
           else
-              alert("Invalid join type."); // Might want to change this to just show in a message box instead.
+            alert("Invalid join type."); // Might want to change this to just show in a message box instead.
       };
 
       // Needs updating for new JSON format. Can you do "distinct" where it is both true and false?
@@ -182,8 +182,8 @@ var moxalytics = angular.module('moxalytics', [
 
       service.submitReportParameters = function() {
           // Generate the js object to send from the stored data.
-          innerjoinTables.push(service.generateDatabaseObject("TableInner", "TableNameInner", "Column1Inner", "1"));
-          outerjoinTables.push(service.generateDatabaseObject("TableOuter", "TableNameOuter", "Column2Outer", "2"));
+          //innerjoinTables.push(service.generateDatabaseObject("TableInner", "TableNameInner", "Column1Inner", "1"));
+          //outerjoinTables.push(service.generateDatabaseObject("TableOuter", "TableNameOuter", "Column2Outer", "2"));
 
           joins.push({
               "type": "INNER",
@@ -202,6 +202,7 @@ var moxalytics = angular.module('moxalytics', [
           params.ORDERBY = orderby;
 
           console.log(params);
+        localStorage["params"] = params;
       
           // Send the code to the server
           // Data is POSTed to api/Database
@@ -235,7 +236,25 @@ var moxalytics = angular.module('moxalytics', [
       $scope.databases = []; // Might need to move this to its own factory. Don't know whether to use [] or {}.
       // Might want to include the tables in the databases object.
       $scope.databases.tables = [];
-      $scope.opFields = {};
+      //$scope.opFields = {};
+      $scope.operations = {
+        'INNERJOIN': {
+          name: 'Inner Joins',
+          opFields: {}
+        },
+        'OUTERJOIN': {
+          name: 'Outer Joins',
+          opFields: {}
+        },
+        'SELECT': {
+          name: 'Select',
+          opFields: {}
+        }
+      }
+      $scope.count = 0;
+      $scope.countNeeded = 1;
+      $scope.db1 = null;
+      $scope.currentOperation = "INNERJOIN";
       $scope.server = "esp--xray"; // This will need to be changed based on the server the user selects. The -- is used in place of a /. Helps in api calls.
 
       // Load json data using $http. This is automatically called when the page is loaded.
@@ -298,22 +317,69 @@ var moxalytics = angular.module('moxalytics', [
         $scope.databases = [{ name: "First Database", tables: [{ name: "Table1", fields: [{ name: "Field1", value: "1" }, { name: "field2", value: "2" }] }, { name: "Table2", fields: [{ name: "Field3", value: "3" }, { name: "field4", value: "4" }] }] }, { name: "Second Database", tables: [{ name: "Table3", fields: [{ name: "Field5", value: "5" }, { name: "field6", value: "6" }] }, { name: "Table4", fields: [{ name: "Field7", value: "7" }, { name: "field8", value: "8" }] }] }];
       }
 
-      $scope.addField = function(database, table, field) {
-        if ($scope.opFields[database] == null) {
-          $scope.opFields[database] = {};
-          $scope.opFields[database].name = database;
-          $scope.opFields[database].tables = {};
+      $scope.setOperation = function(operation) {
+        $scope.currentOperation = operation;
+        $scope.count = 0;
+        $scope.countNeeded = 1;
+        $scope.db1 = null;
+        if ($scope.currentOperation === "INNERJOIN" || $scope.currentOperation === "OUTERJOIN")
+          $scope.countNeeded = 2;
+      }
+
+      // Add fields to the report builder.
+      $scope.addField = function (database, table, field) {
+        // This switch statement could be a lot cleaner and a lot less verbose.
+        switch ($scope.currentOperation) {
+          case "INNERJOIN":
+            if ($scope.count === 1 /*$scope.countNeeded*/) {
+              dataFactory.addJoin("INNER", $scope.db1, dataFactory.generateDatabaseObject(database, table, field));
+              $scope.count = 0;
+              $scope.db1 = null;
+            }
+            else {
+              $scope.db1 = dataFactory.generateDatabaseObject(database, table, field);
+              $scope.count++;
+            }
+            break;
+          case "OUTERJOIN":
+            if ($scope.count === 1 /*$scope.countNeeded*/) {
+              dataFactory.addJoin("OUTER", $scope.db1, dataFactory.generateDatabaseObject(database, table, field));
+              $scope.count = 0;
+              $scope.db1 = null;
+            }
+            else {
+              $scope.db1 = dataFactory.generateDatabaseObject(database, table, field);
+              $scope.count++;
+            }
+            break;
+          case "SELECT":
+            if ($scope.count === 0) {
+              dataFactory.addSelect(database = dataFactory.generateDatabaseObject(database, table, field));
+              $scope.count = 0;
+              $scope.db1 = null;
+            }
+          default:
+            break;
+        }
+        //console.log($scope.operations[$scope.currentOperation].opfields);
+        if (typeof $scope.operations[$scope.currentOperation].opFields == "undefined") {
+          $scope.operations[$scope.currentOperation].opFields = {};
+        }
+        if (typeof $scope.operations[$scope.currentOperation].opFields[database] == "undefined") {
+          $scope.operations[$scope.currentOperation].opFields[database] = {};
+          $scope.operations[$scope.currentOperation].opFields[database].name = database;
+          $scope.operations[$scope.currentOperation].opFields[database].tables = {};
         }
 
-        if ($scope.opFields[database].tables[table] == null) {
-          $scope.opFields[database].tables[table] = {};
-          $scope.opFields[database].tables[table].name = table;
-          $scope.opFields[database].tables[table].fields = [];
+        if (typeof $scope.operations[$scope.currentOperation].opFields[database].tables[table] == "undefined") {
+          $scope.operations[$scope.currentOperation].opFields[database].tables[table] = {};
+          $scope.operations[$scope.currentOperation].opFields[database].tables[table].name = table;
+          $scope.operations[$scope.currentOperation].opFields[database].tables[table].fields = [];
         }
 
-        if ($.inArray(field, $scope.opFields[database].tables[table].fields) == -1)
-          $scope.opFields[database].tables[table].fields.push(field);
-        console.log($scope.opFields);
+        if ($.inArray(field, $scope.operations[$scope.currentOperation].opFields[database].tables[table].fields) == -1)
+          $scope.operations[$scope.currentOperation].opFields[database].tables[table].fields.push(field);
+        //console.log($scope.operations[$scope.currentOperation].opFields);
       }
 
       // Use this function for testing things.
@@ -336,45 +402,45 @@ var moxalytics = angular.module('moxalytics', [
     }]);
 
   // Example data layout for the information about the databases...
-  service = {
-      databases: [
-          {
-              name: "steve",
-              tables: [
-                  {
-                      name: "table_steve",
-                      columns: [
-                          "column1",
-                          "column2"
-                      ]
-                  },
-                  {
-                      name: "table2_steve",
-                      columns: [
-                          "column3",
-                          "column4"
-                      ]
-                  }
-              ]
-          },
-          {
-              name: "bob",
-              tables: [
-                  {
-                      name: "table_bob",
-                      columns: [
-                          "column5",
-                          "column6"
-                      ]
-                  },
-                  {
-                      name: "table2_bob",
-                      columns: [
-                          "column7",
-                          "column8"
-                      ]
-                  }
-              ]
-          }
-      ]
-  };
+  //service = {
+  //    databases: [
+  //        {
+  //            name: "steve",
+  //            tables: [
+  //                {
+  //                    name: "table_steve",
+  //                    columns: [
+  //                        "column1",
+  //                        "column2"
+  //                    ]
+  //                },
+  //                {
+  //                    name: "table2_steve",
+  //                    columns: [
+  //                        "column3",
+  //                        "column4"
+  //                    ]
+  //                }
+  //            ]
+  //        },
+  //        {
+  //            name: "bob",
+  //            tables: [
+  //                {
+  //                    name: "table_bob",
+  //                    columns: [
+  //                        "column5",
+  //                        "column6"
+  //                    ]
+  //                },
+  //                {
+  //                    name: "table2_bob",
+  //                    columns: [
+  //                        "column7",
+  //                        "column8"
+  //                    ]
+  //                }
+  //            ]
+  //        }
+  //    ]
+  //};
