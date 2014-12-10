@@ -219,7 +219,7 @@ var moxalytics = angular.module('moxalytics', [
                   var storageData = JSON.stringify(data);
                   localStorage["report"] = storageData; // Converted back to a js object on the report viewer.
                   console.log(localStorage["report"]);
-              window.location.href = '/home/Report';
+                  window.location.href = '/home/Report';
             })
               .error(function (data) {
                   console.log(data);
