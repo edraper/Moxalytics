@@ -235,6 +235,7 @@ var moxalytics = angular.module('moxalytics', [
       $scope.databases = []; // Might need to move this to its own factory. Don't know whether to use [] or {}.
       // Might want to include the tables in the databases object.
       $scope.databases.tables = [];
+      $scope.opFields = {};
       $scope.server = "esp--xray"; // This will need to be changed based on the server the user selects. The -- is used in place of a /. Helps in api calls.
 
       // Load json data using $http. This is automatically called when the page is loaded.
@@ -292,6 +293,28 @@ var moxalytics = angular.module('moxalytics', [
           console.log("Unable to load columns for " + table + ".\n" + data.toString());
         });
       };
+
+      $scope.getTestDatabases = function() {
+        $scope.databases = [{ name: "First Database", tables: [{ name: "Table1", fields: [{ name: "Field1", value: "1" }, { name: "field2", value: "2" }] }, { name: "Table2", fields: [{ name: "Field3", value: "3" }, { name: "field4", value: "4" }] }] }, { name: "Second Database", tables: [{ name: "Table3", fields: [{ name: "Field5", value: "5" }, { name: "field6", value: "6" }] }, { name: "Table4", fields: [{ name: "Field7", value: "7" }, { name: "field8", value: "8" }] }] }];
+      }
+
+      $scope.addField = function(database, table, field) {
+        if ($scope.opFields[database] == null) {
+          $scope.opFields[database] = {};
+          $scope.opFields[database].name = database;
+          $scope.opFields[database].tables = {};
+        }
+
+        if ($scope.opFields[database].tables[table] == null) {
+          $scope.opFields[database].tables[table] = {};
+          $scope.opFields[database].tables[table].name = table;
+          $scope.opFields[database].tables[table].fields = [];
+        }
+
+        if ($.inArray(field, $scope.opFields[database].tables[table].fields) == -1)
+          $scope.opFields[database].tables[table].fields.push(field);
+        console.log($scope.opFields);
+      }
 
       // Use this function for testing things.
       // Change to whatever you need.

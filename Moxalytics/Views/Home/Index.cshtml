@@ -1,30 +1,46 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+  ViewBag.Title = "Home Page";
 }
 
 <div class="row">
   <div ng-controller="DatabaseController">
     <a href="" ng-click="getDatabases()">Get databases (if database views don't load automatically).</a><br />
+    <a href="" ng-click="getTestDatabases()">Get test databases</a><br />
     <div class="col-md-4" ng-repeat="database in databases">
       <img src="~/Content/dbicon.png" /><span>{{database.name}}</span>
-      <ul class="table-list">
-        <li ng-repeat="table in database.tables">
-          <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" /><span>{{table}}</span>
-        </li>
-        <li>Click a field to add to report.</li>
-      </ul>
+      <div class="table-list">
+        <div ng-repeat="table in database.tables">
+          <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" /><span>{{table.name}}</span>
+          <div class="field-list">
+            <div ng-repeat="field in table.fields">
+              <button ng-click="addField(database.name,table.name,field.name)" class="btn btn-info btn-sm field-buttons">{{field.name}}</button>
+            </div>
+          </div>
+        </div>
+        <span>Click a field to add to report.</span>
+      </div>
     </div>
-    <button ng-click="submitReport()">Post</button>
-    <button ng-click="submitReport()">Run Report</button>
+    <div class="col-md-4">
+      <div ng-repeat="database in opFields">
+        <span>{{database.name}}</span>
+        <div ng-repeat="table in database.tables" class="table-list">
+          <span>{{table.name}}</span>
+          <div ng-repeat="field in table.fields" class="field-list">
+            <span>{{field}}</span>
+          </div>
+        </div>
+      </div>
+      <button ng-click="submitReport()" class="btn btn-default">Run Report</button>
+    </div>
   </div>
 
   @*<p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-      <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br/>
-      <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />
-      <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />
-      <img src="~/Content/collapseicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />Field<br />Field<br />Field<br />
-      <p>Click a field to add to report.</p>*@
-    @*<div class="col-md-4">
+    <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br/>
+    <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />
+    <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />
+    <img src="~/Content/collapseicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />Field<br />Field<br />Field<br />
+    <p>Click a field to add to report.</p>*@
+  @*<div class="col-md-4">
         <img src="~/Content/dbicon.png" />Database 2<br />
         <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />
         <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />
@@ -32,11 +48,11 @@
         <img src="~/Content/collapseicon.png" /><img src="~/Content/tableicon.png" height="15px" />Table<br />Field<br />Field<br />Field<br />
         <p>Click a field to add to report.</p>
     </div>*@
-  <div class="col-md-4">
-    <h3>Match fields between tables</h3>
-    DB1-Table1-Field<br />DB1-Table1-Field<br />DB1-Table1-Field<br />DB1-Table1-Field<br />
-    DB1-Table1-Field<br />DB1-Table1-Field<br />DB1-Table1-Field<br />DB1-Table1-Field<br />
-    DB1-Table1-Field<br />DB1-Table1-Field<br />DB1-Table1-Field<br />DB1-Table1-Field<br />
-    <p>RUN REPORT</p>
-  </div>
+  @*<div class="col-md-4">
+      <h3>Match fields between tables</h3>
+      DB1-Table1-Field<br />DB1-Table1-Field<br />DB1-Table1-Field<br />DB1-Table1-Field<br />
+      DB1-Table1-Field<br />DB1-Table1-Field<br />DB1-Table1-Field<br />DB1-Table1-Field<br />
+      DB1-Table1-Field<br />DB1-Table1-Field<br />DB1-Table1-Field<br />DB1-Table1-Field<br />
+      <p>RUN REPORT</p>
+    </div>*@
 </div>
