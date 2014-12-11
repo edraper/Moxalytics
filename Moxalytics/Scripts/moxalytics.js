@@ -318,27 +318,34 @@ var moxalytics = angular.module('moxalytics', [
       }
 
       $scope.setOperation = function(operation) {
+        $scope.operations[$scope.currentOperation].opFields = {};
         $scope.currentOperation = operation;
         $scope.count = 0;
         $scope.countNeeded = 1;
         $scope.db1 = null;
         if ($scope.currentOperation === "INNERJOIN" || $scope.currentOperation === "OUTERJOIN")
-          $scope.countNeeded = 2;
+            $scope.countNeeded = 2;
       }
 
       // Add fields to the report builder.
       $scope.addField = function (database, table, field) {
-        // This switch statement could be a lot cleaner and a lot less verbose.
+          // This switch statement could be a lot cleaner and a lot less verbose.
+          if ($scope.count === 0)
+              $scope.operations[$scope.currentOperation].opFields = {};
         switch ($scope.currentOperation) {
           case "INNERJOIN":
             if ($scope.count === 1 /*$scope.countNeeded*/) {
               dataFactory.addJoin("INNER", $scope.db1, dataFactory.generateDatabaseObject(database, table, field));
               $scope.count = 0;
               $scope.db1 = null;
+              $("#status-message").text("Inner join added");
+              $("#message-container").attr('class', 'alert alert-success');
             }
             else {
               $scope.db1 = dataFactory.generateDatabaseObject(database, table, field);
               $scope.count++;
+              $("#status-message").text("Select 1 more field to complete the inner join");
+              $("#message-container").attr('class', 'alert alert-info');
             }
             break;
           case "OUTERJOIN":
@@ -346,10 +353,14 @@ var moxalytics = angular.module('moxalytics', [
               dataFactory.addJoin("OUTER", $scope.db1, dataFactory.generateDatabaseObject(database, table, field));
               $scope.count = 0;
               $scope.db1 = null;
+              $("#status-message").text("Outer join added");
+              $("#message-container").attr('class', 'alert alert-success');
             }
             else {
               $scope.db1 = dataFactory.generateDatabaseObject(database, table, field);
               $scope.count++;
+              $("#status-message").text("Select 1 more field to complete the outer join");
+              $("#message-container").attr('class', 'alert alert-info');
             }
             break;
           case "SELECT":
@@ -357,13 +368,16 @@ var moxalytics = angular.module('moxalytics', [
               dataFactory.addSelect(database = dataFactory.generateDatabaseObject(database, table, field));
               $scope.count = 0;
               $scope.db1 = null;
+              $("#status-message").text("Select added");
+              $("#message-container").attr('class', 'alert alert-success');
             }
           default:
             break;
         }
         //console.log($scope.operations[$scope.currentOperation].opfields);
         if (typeof $scope.operations[$scope.currentOperation].opFields == "undefined") {
-          $scope.operations[$scope.currentOperation].opFields = {};
+            $scope.operations[$scope.currentOperation].opFields = {};
+            //$scope.operations[$scope.currentOperation].opFields.push({});
         }
         if (typeof $scope.operations[$scope.currentOperation].opFields[database] == "undefined") {
           $scope.operations[$scope.currentOperation].opFields[database] = {};
