@@ -13,10 +13,8 @@ var moxalytics = angular.module('moxalytics', [
 
   ]);
 
-    // Might also want a report controller
   moxalytics.factory('reportFactory', function($http) {
       // Holds the report data returned from the server
-      // Needs implementation details
       var service = {};
       //var report = {
       //  reportInformation: "Database 2: Employees, Sales | Database 3: Products, Testing",
@@ -68,7 +66,6 @@ var moxalytics = angular.module('moxalytics', [
       return report;
     };
 
-    //service = report;
     return service;
   });
 
@@ -149,6 +146,7 @@ var moxalytics = angular.module('moxalytics', [
               "last": last,
               "sum": sum
           });
+        //console.log(select);
       };
 
       service.addWhere = function (columnDefault, columnCompare, blogic, betweenStart, betweenEnd, operand, like, val) {
@@ -182,8 +180,6 @@ var moxalytics = angular.module('moxalytics', [
 
       service.submitReportParameters = function() {
           // Generate the js object to send from the stored data.
-          //innerjoinTables.push(service.generateDatabaseObject("TableInner", "TableNameInner", "Column1Inner", "1"));
-          //outerjoinTables.push(service.generateDatabaseObject("TableOuter", "TableNameOuter", "Column2Outer", "2"));
 
           joins.push({
               "type": "INNER",
@@ -233,10 +229,9 @@ var moxalytics = angular.module('moxalytics', [
   moxalytics.controller('DatabaseController', ['$scope', '$http', 'dataFactory', 
     function ($scope, $http, dataFactory) {
       // Need layout for structure here.
-      $scope.databases = []; // Might need to move this to its own factory. Don't know whether to use [] or {}.
-      // Might want to include the tables in the databases object.
+      $scope.databases = []; 
+      
       $scope.databases.tables = [];
-      //$scope.opFields = {};
       $scope.operations = {
         'INNERJOIN': {
           name: 'Inner Joins',
@@ -255,7 +250,7 @@ var moxalytics = angular.module('moxalytics', [
       $scope.countNeeded = 1;
       $scope.db1 = null;
       $scope.currentOperation = "INNERJOIN";
-      $scope.server = "esp--xray"; // This will need to be changed based on the server the user selects. The -- is used in place of a /. Helps in api calls.
+      $scope.server = "esp--xray"; // This will need to be changed based on the server the user selects. The -- is used in place of a \. Helps in api calls.
 
       // Load json data using $http. This is automatically called when the page is loaded.
       $http.get('api/Database/' + $scope.server).success(function (data) {
@@ -264,11 +259,10 @@ var moxalytics = angular.module('moxalytics', [
         for (var i = 0; i < data.length; i++) {
           $scope.databases.push({ name: data[i], tables: [] });
         }
-        //$scope.databases = data.databases;
         $scope.$apply(); //Might need this here...
       }).
       error(function (data) {
-        //console.log("Unable to load databases.\n" + data.toString());
+        console.log("Unable to load databases.\n" + data.toString());
       });
 
       $scope.submitReport = function() {
@@ -280,13 +274,14 @@ var moxalytics = angular.module('moxalytics', [
         $http.get('api/Database/' + $scope.server).success(function (data) {
           console.log(data);
           console.log("testing server connection");
-          $scope.$apply(); // Might need to remove. Needs testing.
-          $scope.databases = data.databases;
+          for (var i = 0; i < data.length; i++) {
+            $scope.databases.push({ name: data[i], tables: [] });
+          }
+          $scope.$apply(); //Might need this here...
         }).
         error(function (data) {
-          //console.log("Unable to load databases.\n" + data.toString());
+          console.log("Unable to load databases.\n" + data.toString());
         });
-        //$scope.getTables()
       };
       
       // Gets the tables for a specified database
@@ -342,6 +337,7 @@ var moxalytics = angular.module('moxalytics', [
         $scope.databases = [{ name: "First Database", tables: [{ name: "Table1", fields: [{ name: "Field1", value: "1" }, { name: "field2", value: "2" }] }, { name: "Table2", fields: [{ name: "Field3", value: "3" }, { name: "field4", value: "4" }] }] }, { name: "Second Database", tables: [{ name: "Table3", fields: [{ name: "Field5", value: "5" }, { name: "field6", value: "6" }] }, { name: "Table4", fields: [{ name: "Field7", value: "7" }, { name: "field8", value: "8" }] }] }];
       }
 
+      // Sets the operation to be added to the database.
       $scope.setOperation = function(operation) {
         $scope.operations[$scope.currentOperation].opFields = {};
         $scope.currentOperation = operation;
@@ -420,66 +416,4 @@ var moxalytics = angular.module('moxalytics', [
           $scope.operations[$scope.currentOperation].opFields[database].tables[table].fields.push(field);
         //console.log($scope.operations[$scope.currentOperation].opFields);
       }
-
-      // Use this function for testing things.
-      // Change to whatever you need.
-      $scope.testFunction = function () {
-        // Pass multiple parameters to the server.
-        $http.get('api/Database/' + $scope.server + "/" + "table1").success(function (data) {
-          console.log(data);
-        });
-      };
-
-      $scope.expandDatabase = function () {
-        // Expands the database to show the tables. Might not need this...
-
-        // esp\xray - pass into function as a string
-        // execute() executes the query
-        // http://www.aspsnippets.com/Articles/Call-ASPNet-Page-Method-using-jQuery-AJAX-Example.aspx
-        // https://stackoverflow.com/questions/17129132/ng-repeat-dosnt-update-itself-after-inserting-new-item-using-dialog
-      };
     }]);
-
-  // Example data layout for the information about the databases...
-  //service = {
-  //    databases: [
-  //        {
-  //            name: "steve",
-  //            tables: [
-  //                {
-  //                    name: "table_steve",
-  //                    columns: [
-  //                        "column1",
-  //                        "column2"
-  //                    ]
-  //                },
-  //                {
-  //                    name: "table2_steve",
-  //                    columns: [
-  //                        "column3",
-  //                        "column4"
-  //                    ]
-  //                }
-  //            ]
-  //        },
-  //        {
-  //            name: "bob",
-  //            tables: [
-  //                {
-  //                    name: "table_bob",
-  //                    columns: [
-  //                        "column5",
-  //                        "column6"
-  //                    ]
-  //                },
-  //                {
-  //                    name: "table2_bob",
-  //                    columns: [
-  //                        "column7",
-  //                        "column8"
-  //                    ]
-  //                }
-  //            ]
-  //        }
-  //    ]
-  //};
