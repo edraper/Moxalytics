@@ -23,6 +23,16 @@ textarea {
     max-width: 280px;
 }
 
+#message-run {
+    /*top: -10px;*/
+}
+
+#run-report-btn {
+    margin-bottom: -10px;
+    /*position: absolute;*/
+    /*float: right;*/
+}
+
 .db-operation {
     margin-top: 10px;
     margin-bottom: 10px;

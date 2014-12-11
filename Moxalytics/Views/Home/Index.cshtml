@@ -15,9 +15,14 @@
           <li role="presentation"><a href="#" data-toggle="tab" ng-click="setOperation('ORDERBY')">Order By</a></li>
         </ul>
       </div>
-      <div class="col-md-4">
-        <div class="alert alert-info" role="alert" id="message-container">
-          <span id="status-message">This box displays important messages</span>
+      <div class="col-md-4" id ="message-run">
+        <div class="row">
+          <div class="alert alert-info" role="alert" id="message-container">
+            <span id="status-message">This box displays important messages</span>
+          </div>
+        </div>
+        <div class="row">
+          
         </div>
       </div>
     </div>
@@ -42,6 +47,7 @@
       </div>
     </div>
     <div class="col-md-4">
+      <button ng-click="submitReport()" class="btn btn-info" id="run-report-btn">Run Report</button>
       <div ng-repeat="operation in operations">
         <h3>{{operation.name}}</h3>
         <div ng-repeat="database in operation.opFields">
@@ -54,7 +60,6 @@
           </div>
         </div>
       </div>
-      <button ng-click="submitReport()" class="btn btn-default">Run Report</button>
     </div>
   </div>
 </div>

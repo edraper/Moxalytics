@@ -74,7 +74,7 @@ namespace Moxalytics.Controllers
             DBInterface.parseJSON(value.ToString()); 
            
             string test =
-                "{\"reportInformation\":\"Database 2: Employees, Sales | Database 3: Products, Testing\",\"date\":\"Date Generated\",\"columns\":[\"Id\",\"ItemName\",\"Description\",\"Stock\",\"ItemId\",\"Lifetime\",\"Notes\"],\"rows\":[{\"Id\":\"123\",\"ItemName\":\"Lens\",\"Description\":\"A lens to see.\",\"Stock\":\"150\",\"ItemId\":\"5679435\",\"Lifetime\":\"400000\",\"Notes\":\"Needs reordering\"},{\"Id\":\"234\",\"ItemName\":\"Frame\",\"Description\":\"A frame for a lens.\",\"Stock\":\"15\",\"ItemId\":\"1534723\",\"Lifetime\":\"300000\",\"Notes\":\"In Stock\"}]}";
+                "{\"reportInformation\":\"Database 1: Employees, Sales | Database 2: Products, Testing\",\"date\":\"Date Generated\",\"columns\":[\"Id\",\"ItemName\",\"Description\",\"Stock\",\"ItemId\",\"Lifetime\",\"Notes\"],\"rows\":[{\"Id\":\"123\",\"ItemName\":\"Lens\",\"Description\":\"A lens to see.\",\"Stock\":\"150\",\"ItemId\":\"5679435\",\"Lifetime\":\"400000\",\"Notes\":\"Needs reordering\"},{\"Id\":\"234\",\"ItemName\":\"Frame\",\"Description\":\"A frame for a lens.\",\"Stock\":\"15\",\"ItemId\":\"1534723\",\"Lifetime\":\"300000\",\"Notes\":\"In Stock\"}]}";
                       
             return test; 
         }

@@ -334,7 +334,7 @@ var moxalytics = angular.module('moxalytics', [
       };
 
       $scope.getTestDatabases = function() {
-        $scope.databases = [{ name: "First Database", tables: [{ name: "Table1", fields: [{ name: "Field1", value: "1" }, { name: "field2", value: "2" }] }, { name: "Table2", fields: [{ name: "Field3", value: "3" }, { name: "field4", value: "4" }] }] }, { name: "Second Database", tables: [{ name: "Table3", fields: [{ name: "Field5", value: "5" }, { name: "field6", value: "6" }] }, { name: "Table4", fields: [{ name: "Field7", value: "7" }, { name: "field8", value: "8" }] }] }];
+        $scope.databases = [{ name: "Database 1", tables: [{ name: "Employees", fields: [{ name: "Id", value: "1" }, { name: "Notes", value: "2" }] }, { name: "Sales", fields: [{ name: "ItemName", value: "3" }, { name: "Description", value: "4" }] }] }, { name: "Database 3", tables: [{ name: "Products", fields: [{ name: "Description", value: "5" }, { name: "Stock", value: "6" }] }, { name: "Testing", fields: [{ name: "Id", value: "7" }, { name: "Name", value: "8" }] }] }];
       }
 
       // Sets the operation to be added to the database.
