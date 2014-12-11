@@ -310,7 +310,7 @@ var moxalytics = angular.module('moxalytics', [
       };
 
       // Gets the columns for a specified database and table.
-      $scope.getColumns = function (database, table) {
+      $scope.getFields = function (database, table) {
         $http.get('api/Database/' + $scope.server + "/" + database + "/" + table).success(function (data) {
           console.log(data);
           console.log("testing getting columns for a specific table");

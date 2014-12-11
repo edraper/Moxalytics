@@ -25,7 +25,7 @@
       <img src="~/Content/dbicon.png" /><span ng-click="getTables(database.name)">{{database.name}}</span>
       <div class="table-list">
         <div ng-repeat="table in database.tables">
-          <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" /><span>{{table.name}}</span>
+          <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" /><span ng-click="getFields(database.name, table.name)">{{table.name}}</span>
           <div class="field-list">
             <div ng-repeat="field in table.fields">
               <button ng-click="addField(database.name,table.name,field.name)" class="btn btn-info btn-sm field-buttons">{{field.name}}</button>
