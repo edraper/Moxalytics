@@ -292,9 +292,12 @@ var moxalytics = angular.module('moxalytics', [
       // Gets the tables for a specified database
       $scope.getTables = function (database) {
         $http.get('api/Database/' + $scope.server + "/" + database).success(function (data) {
-          console.log(data);
+          console.log("Tables: ");
+            console.log(data);
           console.log("testing getting tables for a specific database");
-            var pos = $.inArray(database, $scope.databases);
+          var pos = $.inArray(database, $scope.databases);
+          console.log("pos: " + pos);
+//          console.log("")
           for (var i = 0; i < data.length; i++) {
             $scope.databases[pos].tables.push({ name: data[i], columns: [] });
           }
