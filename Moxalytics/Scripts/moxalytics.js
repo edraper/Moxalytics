@@ -386,12 +386,20 @@ var moxalytics = angular.module('moxalytics', [
             break;
           case "SELECT":
             if ($scope.count === 0) {
-              dataFactory.addSelect(database = dataFactory.generateDatabaseObject(database, table, field));
+              dataFactory.addSelect(dataFactory.generateDatabaseObject(database, table, field));
               $scope.count = 0;
               $scope.db1 = null;
               $("#status-message").text("Select added");
               $("#message-container").attr('class', 'alert alert-success');
             }
+            break;
+          case "ORDERBY":
+            dataFactory.addOrderBy(dataFactory.generateDatabaseObject(database, table, field));
+            $scope.count = 0;
+            $scope.db1 = null;
+            $("#status-message").text("OrderBy Added");
+            $("#message-container").attr('class', 'alert alert-success');
+            break;
           default:
             break;
         }
