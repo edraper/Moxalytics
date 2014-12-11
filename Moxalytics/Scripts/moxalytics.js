@@ -294,8 +294,9 @@ var moxalytics = angular.module('moxalytics', [
         $http.get('api/Database/' + $scope.server + "/" + database).success(function (data) {
           console.log(data);
           console.log("testing getting tables for a specific database");
+            var pos = $.inArray(database, $scope.databases);
           for (var i = 0; i < data.length; i++) {
-            $scope.databases[database].tables.push({ name: data[i] });
+            $scope.databases[pos].tables.push({ name: data[i], columns: [] });
           }
             $scope.$apply();
           }).
