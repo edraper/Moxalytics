@@ -297,7 +297,8 @@ var moxalytics = angular.module('moxalytics', [
           for (var i = 0; i < data.length; i++) {
             $scope.databases[database].tables.push({ name: data[i] });
           }
-        }).
+            $scope.$apply();
+          }).
         error(function (data) {
           console.log("Unable to load tables for " + database + ".\n" + data.toString());
         });
