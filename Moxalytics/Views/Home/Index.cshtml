@@ -22,7 +22,7 @@
     </div>
     
     <div class="col-md-4" ng-repeat="database in databases">
-      <img src="~/Content/dbicon.png" /><span>{{database.name}}</span>
+      <img src="~/Content/dbicon.png" /><span ng-click="getTables(database.name)">{{database.name}}</span>
       <div class="table-list">
         <div ng-repeat="table in database.tables">
           <img src="~/Content/expandicon.png" /><img src="~/Content/tableicon.png" height="15px" /><span>{{table.name}}</span>
@@ -32,7 +32,6 @@
             </div>
           </div>
         </div>
-        <span>Click a field to add to report.</span>
       </div>
     </div>
     <div class="col-md-4">
