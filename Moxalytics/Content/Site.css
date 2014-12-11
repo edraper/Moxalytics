@@ -49,3 +49,10 @@ textarea {
     padding-top: 2px;
     padding-bottom: 2px;
 }
+
+#downloadButton {
+    /*position: absolute;
+    right: 50px;*/
+    float: right;
+    margin-top: -40px;
+}
