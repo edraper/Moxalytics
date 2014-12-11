@@ -262,7 +262,7 @@ var moxalytics = angular.module('moxalytics', [
         console.log(data);
         console.log("testing server connection");
         for (var i = 0; i < data.length; i++) {
-          $scope.databases.push({ name: data[i] });
+          $scope.databases.push({ name: data[i], tables: [] });
         }
         //$scope.databases = data.databases;
         $scope.$apply(); //Might need this here...
