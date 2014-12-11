@@ -202,8 +202,8 @@ var moxalytics = angular.module('moxalytics', [
           params.ORDERBY = orderby;
 
           console.log(params);
-        localStorage["params"] = params;
-      
+        //localStorage["params"] = params;
+        $('#message-container').html();
           // Send the code to the server
           // Data is POSTed to api/Database
           $http.post(
@@ -261,8 +261,8 @@ var moxalytics = angular.module('moxalytics', [
       $http.get('api/Database/' + $scope.server).success(function (data) {
         console.log(data);
         console.log("testing server connection");
-        //$scope.databases = data.databases;
-        //$scope.$apply(); //Might need this here...
+        $scope.databases = data.databases;
+        $scope.$apply(); //Might need this here...
       }).
       error(function (data) {
         //console.log("Unable to load databases.\n" + data.toString());
@@ -277,8 +277,8 @@ var moxalytics = angular.module('moxalytics', [
         $http.get('api/Database/' + $scope.server).success(function (data) {
           console.log(data);
           console.log("testing server connection");
-          //$scope.$apply(); // Might need to remove. Needs testing.
-          //$scope.databases = data.databases;//
+          $scope.$apply(); // Might need to remove. Needs testing.
+          $scope.databases = data.databases;
         }).
         error(function (data) {
           //console.log("Unable to load databases.\n" + data.toString());
