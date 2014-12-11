@@ -292,20 +292,15 @@ var moxalytics = angular.module('moxalytics', [
       // Gets the tables for a specified database
       $scope.getTables = function (database) {
         $http.get('api/Database/' + $scope.server + "/" + database).success(function (data) {
-          console.log("Tables: ");
-            console.log(data);
-          console.log("testing getting tables for a specific database");
+            var pos = 0;
           for (var j = 0; j < $scope.databases.length; j++) {
             if (database === $scope.databases[j].name) {
               pos = j;
               break;
             }
           }
-//          var pos = $.inArray(database, $scope.databases);
-          console.log("pos: " + pos);
-//          console.log("")
           for (var i = 0; i < data.length; i++) {
-            $scope.databases[pos].tables.push({ name: data[i], columns: [] });
+            $scope.databases[pos].tables.push({ name: data[i], fields: [] });
           }
             $scope.$apply();
           }).
@@ -319,9 +314,24 @@ var moxalytics = angular.module('moxalytics', [
         $http.get('api/Database/' + $scope.server + "/" + database + "/" + table).success(function (data) {
           console.log(data);
           console.log("testing getting columns for a specific table");
-          //$scope.databases = data.databases;//
-          // $scope.databases.databasename.tables.tablename.columns = data.columns? //
-          // This statement might not even be syntactically correct. It just depends on how we receive the data.
+          var dpos = 0;
+            var tpos = 0;
+          for (var j = 0; j < $scope.databases.length; j++) {
+            if (database === $scope.databases[j].name) {
+              dpos = j;
+              break;
+            }
+          }
+          for (var k = 0; k < $scope.databases[j].tables.length; k++) {
+            if (table === $scope.databases[j].tables[k].name) {
+              tpos = k;
+              break;
+            }
+          }
+          for (var i = 0; i < data.length; i++) {
+            $scope.databases[dpos].tables[tpos].fields.push({ name: data[i] });
+          }
+          $scope.$apply();
         }).
         error(function (data) {
           console.log("Unable to load columns for " + table + ".\n" + data.toString());
