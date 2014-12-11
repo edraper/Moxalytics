@@ -261,7 +261,10 @@ var moxalytics = angular.module('moxalytics', [
       $http.get('api/Database/' + $scope.server).success(function (data) {
         console.log(data);
         console.log("testing server connection");
-        $scope.databases = data.databases;
+        for (var i = 0; i < data.length; i++) {
+          $scope.databases.push({ name: data[i] });
+        }
+        //$scope.databases = data.databases;
         $scope.$apply(); //Might need this here...
       }).
       error(function (data) {
