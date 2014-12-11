@@ -295,7 +295,13 @@ var moxalytics = angular.module('moxalytics', [
           console.log("Tables: ");
             console.log(data);
           console.log("testing getting tables for a specific database");
-          var pos = $.inArray(database, $scope.databases);
+          for (var j = 0; j < $scope.databases.length; j++) {
+            if (database === $scope.databases[j].name) {
+              pos = j;
+              break;
+            }
+          }
+//          var pos = $.inArray(database, $scope.databases);
           console.log("pos: " + pos);
 //          console.log("")
           for (var i = 0; i < data.length; i++) {
